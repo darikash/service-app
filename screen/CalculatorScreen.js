@@ -59,7 +59,6 @@ export default class CalculatorScreen extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.displayRow}>
-          <View style={styles.titleText}></View>
           <Text style={styles.titleText}>Cost: </Text>
           <TextInput
             style={styles.TextInputStyle}
@@ -155,6 +154,10 @@ const styles = StyleSheet.create({
   },
   displayRow: {
     flexDirection: 'row',
+  },
+  titleText: {
+    color: 'white',
+    fontSize: 20
   },
   displayCol: {
     flexDirection: 'column',
