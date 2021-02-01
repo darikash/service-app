@@ -94,6 +94,35 @@ export default class CalculatorScreen extends React.Component {
             Total: {this.state.displayTotal}
           </Text>
         </View>
+
+        <View style={styles.displayCol}>
+          <Button title="Spilting among friends?" onPress={() => this.setShouldShow()} />
+          {this.state.shouldShow ? (
+            <View style={styles.SplitOuter}>
+              <View style={styles.SpiltStyle}>
+                <View style={styles.displayRow}>
+                  <Text style={{ color: "black", alignSelf: "center", fontSize: 20 }}>Split:        </Text>
+                  <InputSpinner
+                    min={1}
+                    step={1}
+                    colorLeft={this.state.leftColor}
+                    colorRight={"#4ddbff"}
+                    value={this.state.split}
+                    textColor='black'
+                    fontSize={20}
+                    onChange={(num) => {
+                      this.updateSplit(num)
+                      this.setMinColor()
+                    }
+                    }
+                  />
+                </View>
+                <View style={{ paddingTop: 20, flexDirection: "row" }}>
+                  <Text style={{ color: "black", alignSelf: "center", fontSize: 20 }}>Amount Per Person:      {this.state.amountPerPerson}</Text>
+                </View>
+              </View>
+            </View>) : null}
+        </View>
       </View>
     );
   }
@@ -160,9 +189,9 @@ const UselessTextInput = () => {
     />
   );
 }
-//first change
+  //first change
 
-//second push
-//sdfsdf 
+  //second push
+  //sdfsdf 
 
   ;
