@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, TextInput, Button } from "react-native";
 import Slider from "@react-native-community/slider";
+import InputSpinner from "react-native-input-spinner";
 //import CalcInput from '../components/CalcInput';
 //import CalcResultDisplay from '../components/CalcResultDisplay';
 
