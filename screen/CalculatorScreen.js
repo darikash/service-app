@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     backgroundColor: "blue",
     justifyContent: "flex-start",
     paddingTop: 100,
-    
+
     // addded paddinghorizontal
     paddingHorizontal: 100
   },
@@ -122,14 +122,31 @@ const styles = StyleSheet.create({
     height: 50,
     borderColor: "gray",
     borderWidth: 1,
-    width:100,
+    width: 100,
   },
   // added titleText
   titleText: {
     fontSize: 30,
-    fontWeight: "bold", 
+    fontWeight: "bold",
     color: "white",
   },
+  SpiltStyle: {
+    backgroundColor: "white",
+    resizeMode: 'stretch',
+    height: 150,
+    borderRadius: 20,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingBottom: 20,
+    paddingTop: 20,
+    overflow: "hidden",
+  },
+  SplitOuter: {
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingBottom: 20,
+    paddingTop: 20,
+  }
 
 })
 // create a constant placeholder 
@@ -143,6 +160,6 @@ const UselessTextInput = () => {
     />
   );
 }
-//
+  //
 
-;
+  ;
