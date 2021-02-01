@@ -14,6 +14,8 @@ export default class CalculatorScreen extends React.Component {
       split: 1,
       displayTotal: 0,
       amountPerPerson: 0,
+      shouldShow: true,
+      leftColor: "#008fb3"
     };
   }
 
@@ -36,6 +38,20 @@ export default class CalculatorScreen extends React.Component {
     this.state.split = Number(value);
     this.setState(this.state);
     this.calculateTip(this.state.cost);
+  }
+
+  setShouldShow() {
+    this.state.shouldShow = !this.state.shouldShow;
+    this.setState(this.state);
+  }
+
+  setMinColor() {
+    if (this.state.split == 1) {
+      this.state.leftColor = "#008fb3"
+    } else {
+      this.state.leftColor = "#4ddbff"
+    }
+    this.setState(this.state);
   }
 
   render() {
