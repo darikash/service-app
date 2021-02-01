@@ -67,14 +67,6 @@ export default class CalculatorScreen extends React.Component {
           ></TextInput>
         </View>
 
-        <View style={styles.displayRow}>
-          <Text style={{ color: "white" }}>Split: </Text>
-          <TextInput
-            style={styles.TextInputStyle}
-            keyboardType="numeric"
-            onChangeText={this.updateSplit.bind(this)}
-          ></TextInput>
-        </View>
 
         <View style={styles.displayRow}>
           <Slider
@@ -99,11 +91,7 @@ export default class CalculatorScreen extends React.Component {
           </Text>
         </View>
 
-        <View style={styles.displayRow}>
-          <Text style={{ color: "white" }}>
-            Amount Per Person: {this.state.amountPerPerson}
-          </Text>
-        </View>
+    
 
         <View style={styles.displayRow}>
           <Text style={{ color: "white" }}>
