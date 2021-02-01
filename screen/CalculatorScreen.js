@@ -148,33 +148,24 @@ export default class CalculatorScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
-    backgroundColor: "blue",
-    justifyContent: "flex-start",
-    paddingTop: 100,
-
-    // addded paddinghorizontal
-    paddingHorizontal: 100
+    flexDirection: 'column',
+    backgroundColor: 'black',
+    justifyContent: 'flex-start',
+    paddingTop: 100
   },
   displayRow: {
-    flexDirection: "row",
-    // addded alignIntems
-    alignItems: "center",
+    flexDirection: 'row',
+  },
+  displayCol: {
+    flexDirection: 'column',
   },
   TextInputStyle: {
-    color: "white",
-    backgroundColor: "black",
-    // changed hight from 30 to 50 
-    height: 50,
-    borderColor: "gray",
-    borderWidth: 1,
+    color: 'white',
+    backgroundColor: 'black',
+    height: 25,
     width: 100,
-  },
-  // added titleText
-  titleText: {
-    fontSize: 30,
-    fontWeight: "bold",
-    color: "white",
+    borderColor: 'gray',
+    borderWidth: 2
   },
   SpiltStyle: {
     backgroundColor: "white",
@@ -193,8 +184,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     paddingTop: 20,
   }
-
-})
+});
 // create a constant placeholder 
 const UselessTextInput = () => {
   const [value, onChangeText] = React.useState('Useless Placeholder');
