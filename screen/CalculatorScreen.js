@@ -42,7 +42,8 @@ export default class CalculatorScreen extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.displayRow}>
-          <Text style={{ color: "white" }}>Cost: </Text>
+          <View style={styles.titleText}></View>
+          <Text style={styles.titleText}>Cost: </Text>
           <TextInput
             style={styles.TextInputStyle}
             keyboardType="numeric"
@@ -102,18 +103,46 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: "black",
+    backgroundColor: "blue",
     justifyContent: "flex-start",
     paddingTop: 100,
+    
+    // addded paddinghorizontal
+    paddingHorizontal: 100
   },
   displayRow: {
     flexDirection: "row",
+    // addded alignIntems
+    alignItems: "center",
   },
   TextInputStyle: {
     color: "white",
     backgroundColor: "black",
-    height: 30,
+    // changed hight from 30 to 50 
+    height: 50,
     borderColor: "gray",
-    borderWidth: 2,
+    borderWidth: 1,
+    width:100,
   },
-});
+  // added titleText
+  titleText: {
+    fontSize: 30,
+    fontWeight: "bold", 
+    color: "white",
+  },
+
+})
+// create a constant placeholder 
+const UselessTextInput = () => {
+  const [value, onChangeText] = React.useState('Useless Placeholder');
+  return (
+    <TextInputStyle
+      //style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+      onChangeText={text => onChangeText(text)}
+      value={value}
+    />
+  );
+}
+//
+
+;
