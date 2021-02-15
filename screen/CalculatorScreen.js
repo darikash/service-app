@@ -1,24 +1,37 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TextInput, Button } from "react-native";
+import { StyleSheet, Text, View, TextInput, Button, TouchableWithoutFeedback, Keyboard } from "react-native";
 import Slider from "@react-native-community/slider";
 import InputSpinner from "react-native-input-spinner";
 //import CalcInput from '../components/CalcInput';
 //import CalcResultDisplay from '../components/CalcResultDisplay';
 
+const DissmisKeyBoard = ({ children }) => (
+  <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    {children}
+  </TouchableWithoutFeedback>
+);
+
+
+
 export default class CalculatorScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cost: 0,
-      tipPercentage: 0,
-      displayTipAmount: 0,
+      cost: 0.00,
+      tipPercentage: 0.00,
+      displayTipAmount: 0.00,
       split: 1,
-      displayTotal: 0,
-      amountPerPerson: 0,
+      displayTotal: 0.00,
+      amountPerPerson: 0.00,
       shouldShow: true,
-      leftColor: "#008fb3"
+      leftColor: "#008fb3",
+      tipPerPerson: 0
     };
   }
+
+
+
+
 
   calculateTip(value) {
     this.state.cost = Number(value);
@@ -26,23 +39,35 @@ export default class CalculatorScreen extends React.Component {
     this.state.amountPerPerson =
       (this.state.cost + this.state.displayTipAmount) / this.state.split;
     this.state.displayTotal = this.state.cost + this.state.displayTipAmount;
+    this.state.displayTotal.toFixed(2);
+    this.state.amountPerPerson.toFixed(2);
+    this.state.displayTipAmount.toFixed(2);
     this.setState(this.state);
   }
 
   updateTip(value) {
-    this.state.tipPercentage = Number(value) * 0.01;
+    this.state.tipPercentage = (Number(value) * 0.01).toFixed(2);
     this.setState(this.state);
     this.calculateTip(this.state.cost);
+    this.updateTipPerPerson();
   }
 
   updateSplit(value) {
-    this.state.split = Number(value);
+    this.state.split = Number(value).toFixed(2);
     this.setState(this.state);
     this.calculateTip(this.state.cost);
+    this.updateTipPerPerson();
+  }
+
+  updateTipPerPerson() {
+    this.state.tipPerPerson = this.state.displayTipAmount / this.state.split;
+    this.state.tipPerPerson.toFixed(2);
+    this.setState(this.state);
   }
 
   setShouldShow() {
     this.state.shouldShow = !this.state.shouldShow;
+    Keyboard.dismiss()
     this.setState(this.state);
   }
 
@@ -57,79 +82,110 @@ export default class CalculatorScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.SplitOuter}>
-          <Text style={styles.titleText }>Cost: </Text>
-          <View style={styles.CostOuter}></View>
-          <TextInput
-            style={styles.TextInputStyle}
-            keyboardType="numeric"
-            onChangeText={this.calculateTip.bind(this)}
-          ></TextInput>
-        </View>
+      <DissmisKeyBoard>
+        <View style={styles.container}>
 
-
-        <View style={styles.displayRow}>
-         <Text style={styles.titleText }>Tip: </Text>
-          <Slider
-            style={{ width: 200, height: 40 }}
-            minimumValue={0}
-            maximumValue={30}
-            minimumTrackTintColor="#FFFFFF"
-            maximumTrackTintColor="#00ffff"
-            onValueChange={(num) => {
-              this.updateTip(num);
-            }}
-            step={1}
-          />
-          <Text style={{ color: "white" }}>
-            {(this.state.tipPercentage * 100).toFixed(0)}{" "}
-          </Text>
-        </View>
-
-        <View style={styles.displayRow}>
-          <Text style={{ color: "white" }}>
-            Tip Total: {this.state.displayTipAmount}
-          </Text>
-        </View>
-
-    
-
-        <View style={styles.displayRow}>
-          <Text style={{ color: "white" }}>
-            Total: {this.state.displayTotal}
-          </Text>
-        </View>
-
-        <View style={styles.displayCol}>
-          <Button title="Spilting among friends?" onPress={() => this.setShouldShow()} />
-          {this.state.shouldShow ? (
+          <View style={styles.displayCol}>
             <View style={styles.SplitOuter}>
-              <View style={styles.SpiltStyle}>
+              <View style={styles.CostOuter}>
+
+
                 <View style={styles.displayRow}>
-                  <Text style={{ color: "black", alignSelf: "center", fontSize: 20 }}>Split:        </Text>
-                  <InputSpinner
-                    min={1}
-                    step={1}
-                    colorLeft={this.state.leftColor}
-                    colorRight={"#4ddbff"}
-                    value={this.state.split}
-                    textColor='black'
-                    fontSize={20}
-                    onChange={(num) => {
-                      this.updateSplit(num)
-                      this.setMinColor()
-                    }
-                    }
-                  />
+                  <Text style={styles.textInGeneral}>Amount:  </Text>
+                  <TextInput
+                    style={styles.TextInputStyle}
+                    keyboardType="numeric"
+
+                    onChangeText={this.calculateTip.bind(this)}
+                  ></TextInput>
                 </View>
+
+
+
                 <View style={{ paddingTop: 20, flexDirection: "row" }}>
-                  <Text style={{ color: "black", alignSelf: "center", fontSize: 20 }}>Amount Per Person:      {this.state.amountPerPerson}</Text>
+                  <Text style={styles.textInGeneral}>Tip % : </Text>
+                  <Slider
+                    style={{ width: 200, height: 40 }}
+                    minimumValue={0}
+                    maximumValue={30}
+                    minimumTrackTintColor="#00ffff"
+                    maximumTrackTintColor="#00ffff"
+                    onValueChange={(num) => {
+                      this.updateTip(num);
+                    }}
+                    step={1}
+                  />
+                  <Text style={styles.textInGeneral}>
+                    {(this.state.tipPercentage * 100).toFixed(0)}{"%"}
+                  </Text>
                 </View>
+
+                <View style={styles.displayRow}>
+                  <Text style={styles.textInGeneral}>
+                    Tip Total:                    {(this.state.displayTipAmount).toFixed(2)}
+                  </Text>
+                </View>
+
+                <View style={styles.displayRow}>
+                  <Text style={styles.textInGeneral}>
+                    Total:                           {this.state.displayTotal.toFixed(2)}
+                  </Text>
+                </View>
+
+
               </View>
-            </View>) : null}
+            </View>
+          </View>
+
+
+
+
+
+
+
+
+
+
+          <View style={styles.displayCol}>
+            <Button title="Spilting among friends?" onPress={() => this.setShouldShow()} />
+            {this.state.shouldShow ? (
+              <View style={styles.SplitOuter}>
+                <View style={styles.SpiltStyle}>
+                  <View style={styles.displayRow}>
+                    <Text style={styles.textInGeneral}>Split:        </Text>
+                    <InputSpinner
+                      min={1}
+                      step={1}
+                      colorLeft={this.state.leftColor}
+                      colorRight={"#4ddbff"}
+                      value={this.state.split}
+                      textColor='black'
+                      fontSize={20}
+                      onChange={(num) => {
+                        this.updateSplit(num)
+                        this.setMinColor()
+                      }
+                      }
+                    />
+                  </View>
+
+
+                  <View style={{ paddingTop: 20, flexDirection: "row" }}>
+                    <Text style={styles.textInGeneral}>Tip Per Person:         {this.state.tipPerPerson.toFixed(2)}</Text>
+                  </View>
+
+                  <View style={{ paddingTop: 20, flexDirection: "row" }}>
+                    <Text style={styles.textInGeneral}>Total Per Person:      {this.state.amountPerPerson.toFixed(2)}</Text>
+                  </View>
+
+
+
+                </View>
+              </View>) : null}
+          </View>
         </View>
-      </View>
+      </DissmisKeyBoard>
+
     );
   }
 }
@@ -141,31 +197,39 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     justifyContent: 'flex-start',
     paddingTop: 100
-    
+
   },
   displayRow: {
     flexDirection: 'row',
-    alignSelf: "center"
+    paddingTop: 20,
+    // alignSelf: "center"
   },
   titleText: {
     color: 'white',
-    fontSize: 20
+    fontSize: 25
+  },
+  textInGeneral: {
+    color: "black",
+    alignSelf: "center",
+    fontSize: 30
   },
   displayCol: {
     flexDirection: 'column'
   },
   TextInputStyle: {
-    color: 'white',
-    backgroundColor: 'black',
-    height: 25,
-    width: 100,
+    fontSize: 30,
+    color: 'black',
+    backgroundColor: 'white',
+    height: 45,
+    width: 200,
     borderColor: 'gray',
-    borderWidth: 2
+    borderWidth: 1,
+    borderRadius: 5,
   },
   SpiltStyle: {
     backgroundColor: "white",
     resizeMode: 'stretch',
-    height: 150,
+    height: 250,
     borderRadius: 20,
     paddingLeft: 20,
     paddingRight: 20,
@@ -178,7 +242,7 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     paddingBottom: 20,
     paddingTop: 20,
-  }, 
+  },
   CostOuter: {
     borderRadius: 20,
     backgroundColor: "white",
@@ -187,6 +251,9 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     paddingBottom: 20,
     paddingTop: 20,
+    overflow: "hidden",
+    height: 280
+    ,
   }
 });
 // create a constant placeholder 
