@@ -58,8 +58,9 @@ export default class CalculatorScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.displayRow}>
-          <Text style={styles.titleText}>Cost: </Text>
+        <View style={styles.SplitOuter}>
+          <Text style={styles.titleText }>Cost: </Text>
+          <View style={styles.CostOuter}></View>
           <TextInput
             style={styles.TextInputStyle}
             keyboardType="numeric"
@@ -69,6 +70,7 @@ export default class CalculatorScreen extends React.Component {
 
 
         <View style={styles.displayRow}>
+         <Text style={styles.titleText }>Tip: </Text>
           <Slider
             style={{ width: 200, height: 40 }}
             minimumValue={0}
@@ -139,16 +141,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     justifyContent: 'flex-start',
     paddingTop: 100
+    
   },
   displayRow: {
     flexDirection: 'row',
+    alignSelf: "center"
   },
   titleText: {
     color: 'white',
     fontSize: 20
   },
   displayCol: {
-    flexDirection: 'column',
+    flexDirection: 'column'
   },
   TextInputStyle: {
     color: 'white',
@@ -170,6 +174,15 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   SplitOuter: {
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingBottom: 20,
+    paddingTop: 20,
+  }, 
+  CostOuter: {
+    borderRadius: 20,
+    backgroundColor: "white",
+    resizeMode: 'stretch',
     paddingLeft: 20,
     paddingRight: 20,
     paddingBottom: 20,
