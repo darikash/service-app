@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TextInput, Button, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { StyleSheet, Text, View, TextInput, Button, TouchableWithoutFeedback, Keyboard, ScrollView } from "react-native";
 import Slider from "@react-native-community/slider";
 import InputSpinner from "react-native-input-spinner";
 //import CalcInput from '../components/CalcInput';
 //import CalcResultDisplay from '../components/CalcResultDisplay';
 
+//dismisses the keyboard
 const DissmisKeyBoard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     {children}
@@ -23,7 +24,7 @@ export default class CalculatorScreen extends React.Component {
       split: 1,
       displayTotal: 0.00,
       amountPerPerson: 0.00,
-      shouldShow: true,
+      shouldShow: false,
       leftColor: "#008fb3",
       tipPerPerson: 0
     };
@@ -33,7 +34,10 @@ export default class CalculatorScreen extends React.Component {
 
 
 
-  calculateTip(value) {
+  /*
+   * given a cost of the receipt, updates all the number fields in the calculator.
+   */
+  updateAll(value) {
     this.state.cost = Number(value);
     this.state.displayTipAmount = Number(value) * this.state.tipPercentage;
     this.state.amountPerPerson =
@@ -42,28 +46,33 @@ export default class CalculatorScreen extends React.Component {
     this.state.displayTotal.toFixed(2);
     this.state.amountPerPerson.toFixed(2);
     this.state.displayTipAmount.toFixed(2);
+    this.updateTipPerPerson();
     this.setState(this.state);
   }
 
-  updateTip(value) {
-    this.state.tipPercentage = (Number(value) * 0.01).toFixed(2);
-    this.setState(this.state);
-    this.calculateTip(this.state.cost);
-    this.updateTipPerPerson();
-  }
 
-  updateSplit(value) {
-    this.state.split = Number(value).toFixed(2);
-    this.setState(this.state);
-    this.calculateTip(this.state.cost);
-    this.updateTipPerPerson();
-  }
 
   updateTipPerPerson() {
     this.state.tipPerPerson = this.state.displayTipAmount / this.state.split;
     this.state.tipPerPerson.toFixed(2);
     this.setState(this.state);
   }
+
+
+  updateTip(value) {
+    this.state.tipPercentage = (Number(value) * 0.01).toFixed(2);
+    this.setState(this.state);
+    this.updateAll(this.state.cost);
+
+  }
+
+  updateSplit(value) {
+    this.state.split = Number(value).toFixed(2);
+    this.setState(this.state);
+    this.updateAll(this.state.cost);
+  }
+
+
 
   setShouldShow() {
     this.state.shouldShow = !this.state.shouldShow;
@@ -84,7 +93,6 @@ export default class CalculatorScreen extends React.Component {
     return (
       <DissmisKeyBoard>
         <View style={styles.container}>
-
           <View style={styles.displayCol}>
             <View style={styles.SplitOuter}>
               <View style={styles.CostOuter}>
@@ -95,8 +103,9 @@ export default class CalculatorScreen extends React.Component {
                   <TextInput
                     style={styles.TextInputStyle}
                     keyboardType="numeric"
-
-                    onChangeText={this.calculateTip.bind(this)}
+                    onChangeText={this.updateAll.bind(this)}
+                    textAlign="right"
+                    maxLength={7}
                   ></TextInput>
                 </View>
 
@@ -120,16 +129,36 @@ export default class CalculatorScreen extends React.Component {
                   </Text>
                 </View>
 
-                <View style={styles.displayRow}>
-                  <Text style={styles.textInGeneral}>
-                    Tip Total:                    {(this.state.displayTipAmount).toFixed(2)}
-                  </Text>
-                </View>
+
 
                 <View style={styles.displayRow}>
                   <Text style={styles.textInGeneral}>
-                    Total:                           {this.state.displayTotal.toFixed(2)}
+                    Tip Total:{" "}
                   </Text>
+                  <TextInput
+                    style={styles.TextInputHiddenBorderStyle}
+                    defaultValue={(this.state.displayTipAmount).toFixed(2)}
+                    keyboardType="numeric"
+                    onChangeText={this.updateAll.bind(this)}
+                    textAlign="right"
+                    editable={false}
+                  ></TextInput>
+                </View>
+
+
+
+                <View style={styles.displayRow}>
+                  <Text style={styles.textInGeneral}>
+                    Total:{"        "}
+                  </Text>
+                  <TextInput
+                    style={styles.TextInputHiddenBorderStyle}
+                    defaultValue={this.state.displayTotal.toFixed(2)}
+                    keyboardType="numeric"
+                    onChangeText={this.updateAll.bind(this)}
+                    textAlign="right"
+                    editable={false}
+                  ></TextInput>
                 </View>
 
 
@@ -151,6 +180,9 @@ export default class CalculatorScreen extends React.Component {
             {this.state.shouldShow ? (
               <View style={styles.SplitOuter}>
                 <View style={styles.SpiltStyle}>
+
+
+
                   <View style={styles.displayRow}>
                     <Text style={styles.textInGeneral}>Split:        </Text>
                     <InputSpinner
@@ -161,6 +193,7 @@ export default class CalculatorScreen extends React.Component {
                       value={this.state.split}
                       textColor='black'
                       fontSize={20}
+                      maxLength={4}
                       onChange={(num) => {
                         this.updateSplit(num)
                         this.setMinColor()
@@ -170,12 +203,31 @@ export default class CalculatorScreen extends React.Component {
                   </View>
 
 
-                  <View style={{ paddingTop: 20, flexDirection: "row" }}>
-                    <Text style={styles.textInGeneral}>Tip Per Person:         {this.state.tipPerPerson.toFixed(2)}</Text>
-                  </View>
 
                   <View style={{ paddingTop: 20, flexDirection: "row" }}>
-                    <Text style={styles.textInGeneral}>Total Per Person:      {this.state.amountPerPerson.toFixed(2)}</Text>
+                    <Text style={styles.textInGeneral}>Split Tip:</Text>
+                    <TextInput
+                      style={styles.TextInputHiddenBorderStyle}
+                      defaultValue={this.state.tipPerPerson.toFixed(2)}
+                      keyboardType="numeric"
+                      onChangeText={this.updateAll.bind(this)}
+                      textAlign="right"
+                      editable={false}
+                    ></TextInput>
+                  </View>
+
+
+
+                  <View style={{ paddingTop: 20, flexDirection: "row" }}>
+                    <Text style={styles.textInGeneral}>Split Total:</Text>
+                    <TextInput
+                      style={styles.TextInputHiddenBorderStyle}
+                      defaultValue={this.state.amountPerPerson.toFixed(2)}
+                      keyboardType="numeric"
+                      onChangeText={this.updateAll.bind(this)}
+                      textAlign="right"
+                      editable={false}
+                    ></TextInput>
                   </View>
 
 
@@ -204,10 +256,6 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     // alignSelf: "center"
   },
-  titleText: {
-    color: 'white',
-    fontSize: 25
-  },
   textInGeneral: {
     color: "black",
     alignSelf: "center",
@@ -225,6 +273,18 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     borderRadius: 5,
+    flex: 1
+  },
+  TextInputHiddenBorderStyle: {
+    fontSize: 30,
+    color: 'black',
+    backgroundColor: 'white',
+    height: 45,
+    width: 200,
+    borderColor: 'white',
+    borderWidth: 1,
+    borderRadius: 5,
+    flex: 1
   },
   SpiltStyle: {
     backgroundColor: "white",
