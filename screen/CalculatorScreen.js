@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TextInput, Button, TouchableWithoutFeedback, Keyboard, ScrollView } from "react-native";
+import { StyleSheet, Text, View, TextInput, Button, TouchableWithoutFeedback, Keyboard, ScrollView, SafeAreaView, Dimensions, Platform, PixelRatio } from "react-native";
 import Slider from "@react-native-community/slider";
 import InputSpinner from "react-native-input-spinner";
 //import CalcInput from '../components/CalcInput';
@@ -11,6 +11,23 @@ const DissmisKeyBoard = ({ children }) => (
     {children}
   </TouchableWithoutFeedback>
 );
+
+const {
+  width: SCREEN_WIDTH,
+  height: SCREEN_HEIGHT,
+} = Dimensions.get('window');
+
+// based on iphone 5s's scale
+const scale = SCREEN_WIDTH / 460;
+
+export function normalize(size) {
+  const newSize = size * scale
+  if (Platform.OS === 'ios') {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize))
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+  }
+}
 
 
 
@@ -29,10 +46,6 @@ export default class CalculatorScreen extends React.Component {
       tipPerPerson: 0
     };
   }
-
-
-
-
 
   /*
    * given a cost of the receipt, updates all the number fields in the calculator.
@@ -80,6 +93,7 @@ export default class CalculatorScreen extends React.Component {
     this.setState(this.state);
   }
 
+
   setMinColor() {
     if (this.state.split == 1) {
       this.state.leftColor = "#008fb3"
@@ -89,82 +103,86 @@ export default class CalculatorScreen extends React.Component {
     this.setState(this.state);
   }
 
+
+
   render() {
     return (
       <DissmisKeyBoard>
         <View style={styles.container}>
-          <View style={styles.displayCol}>
-            <View style={styles.SplitOuter}>
-              <View style={styles.CostOuter}>
+
+          <SafeAreaView style={styles.SplitOuter}>
+            <View style={styles.CostOuter}>
 
 
-                <View style={styles.displayRow}>
-                  <Text style={styles.textInGeneral}>Amount:  </Text>
-                  <TextInput
-                    style={styles.TextInputStyle}
-                    keyboardType="numeric"
-                    onChangeText={this.updateAll.bind(this)}
-                    textAlign="right"
-                    maxLength={7}
-                  ></TextInput>
-                </View>
-
-
-
-                <View style={{ paddingTop: 20, flexDirection: "row" }}>
-                  <Text style={styles.textInGeneral}>Tip % : </Text>
-                  <Slider
-                    style={{ width: 200, height: 40 }}
-                    minimumValue={0}
-                    maximumValue={30}
-                    minimumTrackTintColor="#00ffff"
-                    maximumTrackTintColor="#00ffff"
-                    onValueChange={(num) => {
-                      this.updateTip(num);
-                    }}
-                    step={1}
-                  />
-                  <Text style={styles.textInGeneral}>
-                    {(this.state.tipPercentage * 100).toFixed(0)}{"%"}
-                  </Text>
-                </View>
+              <View style={styles.displayRow}>
+                <Text style={styles.textInGeneral}>Amount:  </Text>
+                <TextInput
+                  style={styles.TextInputStyle}
+                  keyboardType="numeric"
+                  onChangeText={this.updateAll.bind(this)}
+                  textAlign="right"
+                  maxLength={7}
+                ></TextInput>
+              </View>
 
 
 
-                <View style={styles.displayRow}>
-                  <Text style={styles.textInGeneral}>
-                    Tip Total:{" "}
-                  </Text>
-                  <TextInput
-                    style={styles.TextInputHiddenBorderStyle}
-                    defaultValue={(this.state.displayTipAmount).toFixed(2)}
-                    keyboardType="numeric"
-                    onChangeText={this.updateAll.bind(this)}
-                    textAlign="right"
-                    editable={false}
-                  ></TextInput>
-                </View>
+              <View style={{ paddingTop: 20, flexDirection: "row" }}>
 
-
-
-                <View style={styles.displayRow}>
-                  <Text style={styles.textInGeneral}>
-                    Total:{"        "}
-                  </Text>
-                  <TextInput
-                    style={styles.TextInputHiddenBorderStyle}
-                    defaultValue={this.state.displayTotal.toFixed(2)}
-                    keyboardType="numeric"
-                    onChangeText={this.updateAll.bind(this)}
-                    textAlign="right"
-                    editable={false}
-                  ></TextInput>
-                </View>
-
+                <Text style={styles.textInGeneral}>Tip % : </Text>
+                <Slider
+                  style={{ width: 200, height: 40 }}
+                  minimumValue={0}
+                  maximumValue={30}
+                  minimumTrackTintColor="#00ffff"
+                  maximumTrackTintColor="#00ffff"
+                  onValueChange={(num) => {
+                    this.updateTip(num);
+                  }}
+                  step={1}
+                  flex={1}
+                />
+                <Text style={styles.textInGeneral}>
+                  {(this.state.tipPercentage * 100).toFixed(0)}{"%"}
+                </Text>
 
               </View>
+
+
+
+              <View style={styles.displayRow}>
+                <Text style={styles.textInGeneral}>
+                  Tip Total:{" "}
+                </Text>
+                <TextInput
+                  style={styles.TextInputHiddenBorderStyle}
+                  defaultValue={(this.state.displayTipAmount).toFixed(2)}
+                  keyboardType="numeric"
+                  onChangeText={this.updateAll.bind(this)}
+                  textAlign="right"
+                  editable={false}
+                ></TextInput>
+              </View>
+
+
+
+              <View style={styles.displayRow}>
+                <Text style={styles.textInGeneral}>
+                  Total:{"        "}
+                </Text>
+                <TextInput
+                  style={styles.TextInputHiddenBorderStyle}
+                  defaultValue={this.state.displayTotal.toFixed(2)}
+                  keyboardType="numeric"
+                  onChangeText={this.updateAll.bind(this)}
+                  textAlign="right"
+                  editable={false}
+                ></TextInput>
+              </View>
+
+
             </View>
-          </View>
+          </SafeAreaView>
 
 
 
@@ -175,7 +193,8 @@ export default class CalculatorScreen extends React.Component {
 
 
 
-          <View style={styles.displayCol}>
+
+          <SafeAreaView style={styles.displayCol}>
             <Button title="Spilting among friends?" onPress={() => this.setShouldShow()} />
             {this.state.shouldShow ? (
               <View style={styles.SplitOuter}>
@@ -234,7 +253,7 @@ export default class CalculatorScreen extends React.Component {
 
                 </View>
               </View>) : null}
-          </View>
+          </SafeAreaView>
         </View>
       </DissmisKeyBoard>
 
@@ -248,24 +267,24 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: 'black',
     justifyContent: 'flex-start',
-    paddingTop: 100
+    paddingTop: normalize(100)
 
   },
   displayRow: {
     flexDirection: 'row',
-    paddingTop: 20,
+    paddingTop: normalize(20),
     // alignSelf: "center"
   },
   textInGeneral: {
     color: "black",
     alignSelf: "center",
-    fontSize: 30
+    fontSize: normalize(30),
   },
   displayCol: {
-    flexDirection: 'column'
+
   },
   TextInputStyle: {
-    fontSize: 30,
+    fontSize: normalize(30),
     color: 'black',
     backgroundColor: 'white',
     height: 45,
@@ -276,7 +295,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   TextInputHiddenBorderStyle: {
-    fontSize: 30,
+    fontSize: normalize(30),
     color: 'black',
     backgroundColor: 'white',
     height: 45,
@@ -298,13 +317,13 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   SplitOuter: {
-    paddingLeft: 20,
-    paddingRight: 20,
-    paddingBottom: 20,
-    paddingTop: 20,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 10,
+    paddingTop: 10,
   },
   CostOuter: {
-    borderRadius: 20,
+    borderRadius: normalize(20),
     backgroundColor: "white",
     resizeMode: 'stretch',
     paddingLeft: 20,
@@ -313,7 +332,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     overflow: "hidden",
     height: 280
-    ,
+
   }
 });
 // create a constant placeholder 
