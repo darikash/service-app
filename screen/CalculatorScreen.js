@@ -117,15 +117,13 @@ export default class CalculatorScreen extends React.Component {
     const scrollEnabled = this.state.screenHeight > height;
     return (
       <DissmisKeyBoard>
-        <ScrollView style={styles.container}>
+        <SafeAreaView style={styles.container}>
           <ScrollView
-            style={{ flex: 1 }}
             contentContainerStyle={styles.scrollview}
             scrollEnabled={true}
             onContentSizeChange={this.onContentSizeChange}
           >
-            <SafeAreaView style={styles.SplitOuter}>
-
+            <View style={styles.SplitOuter}>
               <View style={styles.CostOuter}>
 
 
@@ -198,7 +196,7 @@ export default class CalculatorScreen extends React.Component {
 
               </View>
 
-            </SafeAreaView>
+            </View>
 
 
 
@@ -208,9 +206,7 @@ export default class CalculatorScreen extends React.Component {
 
 
 
-
-
-            <SafeAreaView style={styles.displayCol}>
+            <View style={styles.displayCol}>
               <Button title="Spilting among friends?" onPress={() => this.setShouldShow()} />
               {this.state.shouldShow ? (
                 <View style={styles.SplitOuter}>
@@ -269,10 +265,11 @@ export default class CalculatorScreen extends React.Component {
 
                   </View>
                 </View>) : null}
-            </SafeAreaView>
+            </View>
+
           </ScrollView>
-        </ScrollView>
-      </DissmisKeyBoard>
+        </SafeAreaView>
+      </DissmisKeyBoard >
 
     );
   }
@@ -348,7 +345,6 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     overflow: "hidden",
     height: 280
-
   }
 });
 // create a constant placeholder 
