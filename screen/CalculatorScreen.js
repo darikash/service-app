@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, TextInput, Button, TouchableWithoutFeedback, Keyboard, ScrollView, SafeAreaView, Dimensions, Platform, PixelRatio } from "react-native";
 import Slider from "@react-native-community/slider";
 import InputSpinner from "react-native-input-spinner";
+import styles from './styles'
+import { thisExpression } from "@babel/types";
 //import CalcInput from '../components/CalcInput';
 //import CalcResultDisplay from '../components/CalcResultDisplay';
 
@@ -28,10 +30,6 @@ export function normalize(size) {
     return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
   }
 }
-
-
-
-
 
 
 export default class CalculatorScreen extends React.Component {
@@ -118,249 +116,304 @@ export default class CalculatorScreen extends React.Component {
     return (
       <DissmisKeyBoard>
         <SafeAreaView style={styles.container}>
-          <ScrollView
-            contentContainerStyle={styles.scrollview}
-            scrollEnabled={true}
-            onContentSizeChange={this.onContentSizeChange}
-          >
-            <View style={styles.SplitOuter}>
-              <View style={styles.CostOuter}>
 
-
-                <View style={styles.displayRow}>
-                  <Text style={styles.textInGeneral}>Amount:  </Text>
-                  <TextInput
-                    style={styles.TextInputStyle}
-                    keyboardType="numeric"
-                    onChangeText={this.updateAll.bind(this)}
-                    textAlign="right"
-                    maxLength={7}
-                  ></TextInput>
-                </View>
-
-
-
-                <View style={{ paddingTop: 20, flexDirection: "row" }}>
-
-                  <Text style={styles.textInGeneral}>Tip % : </Text>
-                  <Slider
-                    style={{ width: 200, height: 40 }}
-                    minimumValue={0}
-                    maximumValue={30}
-                    minimumTrackTintColor="#00ffff"
-                    maximumTrackTintColor="#00ffff"
-                    onValueChange={(num) => {
-                      this.updateTip(num);
-                    }}
-                    step={1}
-                    flex={1}
-                  />
-                  <Text style={styles.textInGeneral}>
-                    {(this.state.tipPercentage * 100).toFixed(0)}{"%"}
-                  </Text>
-
-                </View>
-
-
-
-                <View style={styles.displayRow}>
-                  <Text style={styles.textInGeneral}>
-                    Tip Total:{" "}
-                  </Text>
-                  <TextInput
-                    style={styles.TextInputHiddenBorderStyle}
-                    defaultValue={(this.state.displayTipAmount).toFixed(2)}
-                    keyboardType="numeric"
-                    onChangeText={this.updateAll.bind(this)}
-                    textAlign="right"
-                    editable={false}
-                  ></TextInput>
-                </View>
-
-
-
-                <View style={styles.displayRow}>
-                  <Text style={styles.textInGeneral}>
-                    Total:{"        "}
-                  </Text>
-                  <TextInput
-                    style={styles.TextInputHiddenBorderStyle}
-                    defaultValue={this.state.displayTotal.toFixed(2)}
-                    keyboardType="numeric"
-                    onChangeText={this.updateAll.bind(this)}
-                    textAlign="right"
-                    editable={false}
-                  ></TextInput>
-                </View>
-
-
-              </View>
-
+          <View style={styles.section}>
+            <View style={styles.mainContent}>
+              <this.Amount />
+              <this.TipPercent />
+              <this.Display text={'Tip Total'} displayVal={(this.state.displayTipAmount).toFixed(2)} />
+              <this.Display text={'Total'} displayVal={(this.state.displayTotal).toFixed(2)} />
             </View>
-
-
-
-
-
-
-
-
-
-            <View style={styles.displayCol}>
-              <Button title="Spilting among friends?" onPress={() => this.setShouldShow()} />
-              {this.state.shouldShow ? (
-                <View style={styles.SplitOuter}>
-                  <View style={styles.SpiltStyle}>
-
-
-
-                    <View style={styles.displayRow}>
-                      <Text style={styles.textInGeneral}>Split:        </Text>
-                      <InputSpinner
-                        min={1}
-                        step={1}
-                        colorLeft={this.state.leftColor}
-                        colorRight={"#4ddbff"}
-                        value={this.state.split}
-                        textColor='black'
-                        fontSize={20}
-                        maxLength={4}
-                        onChange={(num) => {
-                          this.updateSplit(num)
-                          this.setMinColor()
-                        }
-                        }
-                      />
-                    </View>
-
-
-
-                    <View style={{ paddingTop: 20, flexDirection: "row" }}>
-                      <Text style={styles.textInGeneral}>Split Tip:</Text>
-                      <TextInput
-                        style={styles.TextInputHiddenBorderStyle}
-                        defaultValue={this.state.tipPerPerson.toFixed(2)}
-                        keyboardType="numeric"
-                        onChangeText={this.updateAll.bind(this)}
-                        textAlign="right"
-                        editable={false}
-                      ></TextInput>
-                    </View>
-
-
-
-                    <View style={{ paddingTop: 20, flexDirection: "row" }}>
-                      <Text style={styles.textInGeneral}>Split Total:</Text>
-                      <TextInput
-                        style={styles.TextInputHiddenBorderStyle}
-                        defaultValue={this.state.amountPerPerson.toFixed(2)}
-                        keyboardType="numeric"
-                        onChangeText={this.updateAll.bind(this)}
-                        textAlign="right"
-                        editable={false}
-                      ></TextInput>
-                    </View>
-
-
-
-                  </View>
-                </View>) : null}
-            </View>
-
-          </ScrollView>
+          </View>
+          <View style={styles.section}>
+            <this.displayExtraPeople />
+          </View>
         </SafeAreaView>
       </DissmisKeyBoard >
 
     );
   }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: 'black',
-    paddingTop: normalize(100)
-
-  },
-  displayRow: {
-    flexDirection: 'row',
-    paddingTop: normalize(20),
-    // alignSelf: "center"
-  },
-  textInGeneral: {
-    color: "black",
-    alignSelf: "center",
-    fontSize: normalize(30),
-  },
-  displayCol: {
-
-  },
-  TextInputStyle: {
-    fontSize: normalize(30),
-    color: 'black',
-    backgroundColor: 'white',
-    height: 45,
-    width: 200,
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: 5,
-    flex: 1
-  },
-  TextInputHiddenBorderStyle: {
-    fontSize: normalize(30),
-    color: 'black',
-    backgroundColor: 'white',
-    height: 45,
-    width: 200,
-    borderColor: 'white',
-    borderWidth: 1,
-    borderRadius: 5,
-    flex: 1
-  },
-  SpiltStyle: {
-    backgroundColor: "white",
-    resizeMode: 'stretch',
-    height: 250,
-    borderRadius: 20,
-    paddingLeft: 20,
-    paddingRight: 20,
-    paddingBottom: 20,
-    paddingTop: 20,
-    overflow: "hidden",
-  },
-  SplitOuter: {
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingBottom: 10,
-    paddingTop: 10,
-  },
-  CostOuter: {
-    borderRadius: normalize(20),
-    backgroundColor: "white",
-    resizeMode: 'stretch',
-    paddingLeft: 20,
-    paddingRight: 20,
-    paddingBottom: 20,
-    paddingTop: 20,
-    overflow: "hidden",
-    height: 280
+  Amount = () => {
+    return (
+      <View style={styles.displayCol} paddingBottom={'15%'}>
+        <View style={styles.labelTextContainer}>
+          <Text style={styles.textInGeneral}>Amount</Text>
+        </View>
+        <View style={styles.inputTypeContainter}>
+          <TextInput
+            style={styles.TextInputStyle}
+            keyboardType="numeric"
+            onChangeText={this.updateAll.bind(this)}
+            textAlign="right"
+            maxLength={7}
+          />
+        </View>
+      </View>
+    )
   }
-});
-// create a constant placeholder 
-const UselessTextInput = () => {
-  const [value, onChangeText] = React.useState('Useless Placeholder');
-  return (
-    <TextInputStyle
-      //style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-      onChangeText={text => onChangeText(text)}
-      value={value}
-    />
-  );
+
+  TipPercent = () => {
+    return (
+      <View style={styles.displayRow}>
+        <Text style={styles.textInGeneral}>Tip % : </Text>
+        <Slider
+          style={{ width: 200, height: 40 }}
+          minimumValue={0}
+          maximumValue={30}
+          minimumTrackTintColor="#00ffff"
+          maximumTrackTintColor="#00ffff"
+          onValueChange={(num) => {
+            this.updateTip(num);
+          }}
+          step={1}
+          flex={1}
+        />
+        <Text style={styles.textInGeneral}>
+          {(this.state.tipPercentage * 100).toFixed(0)}{"%"}
+        </Text>
+
+      </View>
+    )
+  }
+  Display = ({ text, displayVal }) => {
+    return (
+      <View style={styles.displayRow}>
+        <View style={styles.center}>
+          <Text style={styles.textInGeneral}>
+            {text}
+          </Text>
+        </View>
+        <View style={styles.center}>
+          <TextInput
+            style={styles.textInGeneral}
+            defaultValue={displayVal}
+            keyboardType="numeric"
+            onChangeText={this.updateAll.bind(this)}
+            textAlign="right"
+            editable={false}
+          />
+        </View>
+      </View>
+    )
+  }
+
+  displayExtraPeople = () => {
+    return (
+      <View style={styles.displayCol}>
+        <Button title="Spilting among friends?" onPress={() => this.setShouldShow()} />
+        {this.state.shouldShow ? (
+          <View style={styles.mainContent}>
+            <View style={styles.displayRow}>
+              <Text style={styles.textInGeneral}>Split:</Text>
+              <InputSpinner
+                min={1}
+                step={1}
+                colorLeft={this.state.leftColor}
+                colorRight={"#4ddbff"}
+                value={this.state.split}
+                textColor='black'
+                fontSize={20}
+                maxLength={4}
+                onChange={(num) => {
+                  this.updateSplit(num)
+                  this.setMinColor()
+                }
+                }
+              />
+            </View>
+            <View style={styles.displayRow}>
+              <Text style={styles.textInGeneral}>Split Tip:</Text>
+              <TextInput
+                style={styles.textInGeneral}
+                defaultValue={this.state.tipPerPerson.toFixed(2)}
+                keyboardType="numeric"
+                onChangeText={this.updateAll.bind(this)}
+                textAlign="right"
+                editable={false}
+              />
+            </View>
+
+
+
+            <View style={styles.displayRow}>
+              <Text style={styles.textInGeneral}>Split Total: </Text>
+              <TextInput
+                style={styles.textInGeneral}
+                defaultValue={this.state.amountPerPerson.toFixed(2)}
+                keyboardType="numeric"
+                onChangeText={this.updateAll.bind(this)}
+                textAlign="right"
+                editable={false}
+              />
+            </View>
+
+
+
+
+          </View>) : null}
+      </View>
+    )
+  }
 }
-  //first change
 
-  //second push
-  //sdfsdf 
+//first change
 
-  ;
+//second push
+//sdfsdf 
+
+;
+
+/*
+
+<ScrollView
+            contentContainerStyle={styles.scrollview}
+            scrollEnabled={true}
+            onContentSizeChange={this.onContentSizeChange}
+          >
+
+
+          </ScrollView>
+<View style={styles.SplitOuter}>
+            <View style={styles.CostOuter}>
+
+
+              <View style={styles.displayCol}>
+                <Text style={styles.textInGeneral}>Amount:  </Text>
+                <TextInput
+                  style={styles.TextInputStyle}
+                  keyboardType="numeric"
+                  onChangeText={this.updateAll.bind(this)}
+                  textAlign="right"
+                  maxLength={7}
+                ></TextInput>
+              </View>
+
+
+
+              <View style={{ paddingTop: 20, flexDirection: "row" }}>
+
+                <Text style={styles.textInGeneral}>Tip % : </Text>
+                <Slider
+                  style={{ width: 200, height: 40 }}
+                  minimumValue={0}
+                  maximumValue={30}
+                  minimumTrackTintColor="#00ffff"
+                  maximumTrackTintColor="#00ffff"
+                  onValueChange={(num) => {
+                    this.updateTip(num);
+                  }}
+                  step={1}
+                  flex={1}
+                />
+                <Text style={styles.textInGeneral}>
+                  {(this.state.tipPercentage * 100).toFixed(0)}{"%"}
+                </Text>
+
+              </View>
+
+
+
+              <View style={styles.displayCol}>
+                <Text style={styles.textInGeneral}>
+                  Tip Total:{" "}
+                </Text>
+                <TextInput
+                  style={styles.TextInputHiddenBorderStyle}
+                  defaultValue={(this.state.displayTipAmount).toFixed(2)}
+                  keyboardType="numeric"
+                  onChangeText={this.updateAll.bind(this)}
+                  textAlign="right"
+                  editable={false}
+                ></TextInput>
+              </View>
+
+
+
+              <View style={styles.displayCol}>
+                <Text style={styles.textInGeneral}>
+                  Total:{"        "}
+                </Text>
+                <TextInput
+                  style={styles.TextInputHiddenBorderStyle}
+                  defaultValue={this.state.displayTotal.toFixed(2)}
+                  keyboardType="numeric"
+                  onChangeText={this.updateAll.bind(this)}
+                  textAlign="right"
+                  editable={false}
+                ></TextInput>
+              </View>
+
+
+            </View>
+
+          </View>
+
+
+
+
+
+
+
+
+
+          <View style={styles.displayCol}>
+            <Button title="Spilting among friends?" onPress={() => this.setShouldShow()} />
+            {this.state.shouldShow ? (
+              <View style={styles.SplitOuter}>
+                <View style={styles.SpiltStyle}>
+
+
+
+                  <View style={styles.displayCol}>
+                    <Text style={styles.textInGeneral}>Split:        </Text>
+                    <InputSpinner
+                      min={1}
+                      step={1}
+                      colorLeft={this.state.leftColor}
+                      colorRight={"#4ddbff"}
+                      value={this.state.split}
+                      textColor='black'
+                      fontSize={20}
+                      maxLength={4}
+                      onChange={(num) => {
+                        this.updateSplit(num)
+                        this.setMinColor()
+                      }
+                      }
+                    />
+                  </View>
+
+
+
+                  <View style={{ paddingTop: 20, flexDirection: "row" }}>
+                    <Text style={styles.textInGeneral}>Split Tip:</Text>
+                    <TextInput
+                      style={styles.TextInputHiddenBorderStyle}
+                      defaultValue={this.state.tipPerPerson.toFixed(2)}
+                      keyboardType="numeric"
+                      onChangeText={this.updateAll.bind(this)}
+                      textAlign="right"
+                      editable={false}
+                    ></TextInput>
+                  </View>
+
+
+
+                  <View style={{ paddingTop: 20, flexDirection: "row" }}>
+                    <Text style={styles.textInGeneral}>Split Total:</Text>
+                    <TextInput
+                      style={styles.TextInputHiddenBorderStyle}
+                      defaultValue={this.state.amountPerPerson.toFixed(2)}
+                      keyboardType="numeric"
+                      onChangeText={this.updateAll.bind(this)}
+                      textAlign="right"
+                      editable={false}
+                    ></TextInput>
+                  </View>
+
+
+
+                </View>
+              </View>) : null}
+          </View>
+*/
