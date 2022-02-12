@@ -1,6 +1,5 @@
 import { StyleSheet } from "react-native";
-import { normalize } from "./CalculatorScreen";
-
+import { RFPercentage } from "react-native-responsive-fontsize";
 export default StyleSheet.create({
     container: {
         flex: 1,
@@ -19,7 +18,7 @@ export default StyleSheet.create({
     textInGeneral: {
         color: "#585858",
         lineHeight: 40,
-        fontSize: normalize(30)
+        fontSize: RFPercentage(5)
     },
     smallText: {
         color: "black",

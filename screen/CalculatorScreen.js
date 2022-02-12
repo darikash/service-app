@@ -13,23 +13,9 @@ const DissmisKeyBoard = ({ children }) => (
     {children}
   </TouchableWithoutFeedback>
 );
-const { height } = Dimensions.get('window');
-const {
-  width: SCREEN_WIDTH,
-  height: SCREEN_HEIGHT,
-} = Dimensions.get('window');
 
-// based on iphone 5s's scale
-const scale = SCREEN_WIDTH / 460;
 
-export function normalize(size) {
-  const newSize = size * scale
-  if (Platform.OS === 'ios') {
-    return Math.round(PixelRatio.roundToNearestPixel(newSize))
-  } else {
-    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
-  }
-}
+
 
 
 export default class CalculatorScreen extends React.Component {
@@ -104,179 +90,20 @@ export default class CalculatorScreen extends React.Component {
     this.setState(this.state);
   }
 
-  onContentSizeChange = (contentWidth, contentHeight) => {
-
-    this.setState({ screenHeight: contentHeight });
-  };
 
 
 
   render() {
-    const scrollEnabled = this.state.screenHeight > height;
     return (
       <DissmisKeyBoard>
-        <SafeAreaView style={styles.container}>
+        <ScrollView
+          contentContainerStyle={styles.scrollview}
+          scrollEnabled={true}
+          onContentSizeChange={this.onContentSizeChange}
+        >
 
-          <View style={styles.section}>
-            <View style={styles.mainContent}>
-              <this.Amount />
-              <this.TipPercent />
-              <this.Display text={'Tip Total'} displayVal={(this.state.displayTipAmount).toFixed(2)} />
-              <this.Display text={'Total'} displayVal={(this.state.displayTotal).toFixed(2)} />
-            </View>
-          </View>
-          <View style={styles.section}>
-            <this.displayExtraPeople />
-          </View>
-        </SafeAreaView>
-      </DissmisKeyBoard >
-
-    );
-  }
-  Amount = () => {
-    return (
-      <View style={styles.displayCol} paddingBottom={'15%'}>
-        <View style={styles.labelTextContainer}>
-          <Text style={styles.textInGeneral}>Amount</Text>
-        </View>
-        <View style={styles.inputTypeContainter}>
-          <TextInput
-            style={styles.TextInputStyle}
-            keyboardType="numeric"
-            onChangeText={this.updateAll.bind(this)}
-            textAlign="right"
-            maxLength={7}
-          />
-        </View>
-      </View>
-    )
-  }
-
-  TipPercent = () => {
-    return (
-      <View style={styles.displayRow}>
-        <Text style={styles.textInGeneral}>Tip % : </Text>
-        <Slider
-          style={{ width: 200, height: 40 }}
-          minimumValue={0}
-          maximumValue={30}
-          minimumTrackTintColor="#00ffff"
-          maximumTrackTintColor="#00ffff"
-          onValueChange={(num) => {
-            this.updateTip(num);
-          }}
-          step={1}
-          flex={1}
-        />
-        <Text style={styles.textInGeneral}>
-          {(this.state.tipPercentage * 100).toFixed(0)}{"%"}
-        </Text>
-
-      </View>
-    )
-  }
-  Display = ({ text, displayVal }) => {
-    return (
-      <View style={styles.displayRow}>
-        <View style={styles.center}>
-          <Text style={styles.textInGeneral}>
-            {text}
-          </Text>
-        </View>
-        <View style={styles.center}>
-          <TextInput
-            style={styles.textInGeneral}
-            defaultValue={displayVal}
-            keyboardType="numeric"
-            onChangeText={this.updateAll.bind(this)}
-            textAlign="right"
-            editable={false}
-          />
-        </View>
-      </View>
-    )
-  }
-
-  displayExtraPeople = () => {
-    return (
-      <View style={styles.displayCol}>
-        <Button title="Spilting among friends?" onPress={() => this.setShouldShow()} />
-        {this.state.shouldShow ? (
-          <View style={styles.mainContent}>
-            <View style={styles.displayRow}>
-              <Text style={styles.textInGeneral}>Split:</Text>
-              <InputSpinner
-                min={1}
-                step={1}
-                colorLeft={this.state.leftColor}
-                colorRight={"#4ddbff"}
-                value={this.state.split}
-                textColor='black'
-                fontSize={20}
-                maxLength={4}
-                onChange={(num) => {
-                  this.updateSplit(num)
-                  this.setMinColor()
-                }
-                }
-              />
-            </View>
-            <View style={styles.displayRow}>
-              <Text style={styles.textInGeneral}>Split Tip:</Text>
-              <TextInput
-                style={styles.textInGeneral}
-                defaultValue={this.state.tipPerPerson.toFixed(2)}
-                keyboardType="numeric"
-                onChangeText={this.updateAll.bind(this)}
-                textAlign="right"
-                editable={false}
-              />
-            </View>
-
-
-
-            <View style={styles.displayRow}>
-              <Text style={styles.textInGeneral}>Split Total: </Text>
-              <TextInput
-                style={styles.textInGeneral}
-                defaultValue={this.state.amountPerPerson.toFixed(2)}
-                keyboardType="numeric"
-                onChangeText={this.updateAll.bind(this)}
-                textAlign="right"
-                editable={false}
-              />
-            </View>
-
-
-
-
-          </View>) : null}
-      </View>
-    )
-  }
-}
-
-//first change
-
-//second push
-//sdfsdf 
-
-;
-
-/*
-
-<ScrollView
-            contentContainerStyle={styles.scrollview}
-            scrollEnabled={true}
-            onContentSizeChange={this.onContentSizeChange}
-          >
-
-
-          </ScrollView>
-<View style={styles.SplitOuter}>
+          <View style={styles.SplitOuter}>
             <View style={styles.CostOuter}>
-
-
               <View style={styles.displayCol}>
                 <Text style={styles.textInGeneral}>Amount:  </Text>
                 <TextInput
@@ -287,11 +114,7 @@ export default class CalculatorScreen extends React.Component {
                   maxLength={7}
                 ></TextInput>
               </View>
-
-
-
               <View style={{ paddingTop: 20, flexDirection: "row" }}>
-
                 <Text style={styles.textInGeneral}>Tip % : </Text>
                 <Slider
                   style={{ width: 200, height: 40 }}
@@ -308,11 +131,7 @@ export default class CalculatorScreen extends React.Component {
                 <Text style={styles.textInGeneral}>
                   {(this.state.tipPercentage * 100).toFixed(0)}{"%"}
                 </Text>
-
               </View>
-
-
-
               <View style={styles.displayCol}>
                 <Text style={styles.textInGeneral}>
                   Tip Total:{" "}
@@ -326,9 +145,6 @@ export default class CalculatorScreen extends React.Component {
                   editable={false}
                 ></TextInput>
               </View>
-
-
-
               <View style={styles.displayCol}>
                 <Text style={styles.textInGeneral}>
                   Total:{"        "}
@@ -342,28 +158,13 @@ export default class CalculatorScreen extends React.Component {
                   editable={false}
                 ></TextInput>
               </View>
-
-
             </View>
-
           </View>
-
-
-
-
-
-
-
-
-
           <View style={styles.displayCol}>
             <Button title="Spilting among friends?" onPress={() => this.setShouldShow()} />
             {this.state.shouldShow ? (
               <View style={styles.SplitOuter}>
                 <View style={styles.SpiltStyle}>
-
-
-
                   <View style={styles.displayCol}>
                     <Text style={styles.textInGeneral}>Split:        </Text>
                     <InputSpinner
@@ -382,9 +183,6 @@ export default class CalculatorScreen extends React.Component {
                       }
                     />
                   </View>
-
-
-
                   <View style={{ paddingTop: 20, flexDirection: "row" }}>
                     <Text style={styles.textInGeneral}>Split Tip:</Text>
                     <TextInput
@@ -396,9 +194,6 @@ export default class CalculatorScreen extends React.Component {
                       editable={false}
                     ></TextInput>
                   </View>
-
-
-
                   <View style={{ paddingTop: 20, flexDirection: "row" }}>
                     <Text style={styles.textInGeneral}>Split Total:</Text>
                     <TextInput
@@ -410,9 +205,134 @@ export default class CalculatorScreen extends React.Component {
                       editable={false}
                     ></TextInput>
                   </View>
+                </View>
+              </View>) : null}
+          </View>
+        </ScrollView>
+      </DissmisKeyBoard >
 
+    );
+  }
 
+}
 
+//first change
+
+//second push
+//sdfsdf 
+
+;
+
+/*
+<ScrollView
+            contentContainerStyle={styles.scrollview}
+            scrollEnabled={true}
+            onContentSizeChange={this.onContentSizeChange}
+          >
+          </ScrollView>
+<View style={styles.SplitOuter}>
+            <View style={styles.CostOuter}>
+              <View style={styles.displayCol}>
+                <Text style={styles.textInGeneral}>Amount:  </Text>
+                <TextInput
+                  style={styles.TextInputStyle}
+                  keyboardType="numeric"
+                  onChangeText={this.updateAll.bind(this)}
+                  textAlign="right"
+                  maxLength={7}
+                ></TextInput>
+              </View>
+              <View style={{ paddingTop: 20, flexDirection: "row" }}>
+                <Text style={styles.textInGeneral}>Tip % : </Text>
+                <Slider
+                  style={{ width: 200, height: 40 }}
+                  minimumValue={0}
+                  maximumValue={30}
+                  minimumTrackTintColor="#00ffff"
+                  maximumTrackTintColor="#00ffff"
+                  onValueChange={(num) => {
+                    this.updateTip(num);
+                  }}
+                  step={1}
+                  flex={1}
+                />
+                <Text style={styles.textInGeneral}>
+                  {(this.state.tipPercentage * 100).toFixed(0)}{"%"}
+                </Text>
+              </View>
+              <View style={styles.displayCol}>
+                <Text style={styles.textInGeneral}>
+                  Tip Total:{" "}
+                </Text>
+                <TextInput
+                  style={styles.TextInputHiddenBorderStyle}
+                  defaultValue={(this.state.displayTipAmount).toFixed(2)}
+                  keyboardType="numeric"
+                  onChangeText={this.updateAll.bind(this)}
+                  textAlign="right"
+                  editable={false}
+                ></TextInput>
+              </View>
+              <View style={styles.displayCol}>
+                <Text style={styles.textInGeneral}>
+                  Total:{"        "}
+                </Text>
+                <TextInput
+                  style={styles.TextInputHiddenBorderStyle}
+                  defaultValue={this.state.displayTotal.toFixed(2)}
+                  keyboardType="numeric"
+                  onChangeText={this.updateAll.bind(this)}
+                  textAlign="right"
+                  editable={false}
+                ></TextInput>
+              </View>
+            </View>
+          </View>
+          <View style={styles.displayCol}>
+            <Button title="Spilting among friends?" onPress={() => this.setShouldShow()} />
+            {this.state.shouldShow ? (
+              <View style={styles.SplitOuter}>
+                <View style={styles.SpiltStyle}>
+                  <View style={styles.displayCol}>
+                    <Text style={styles.textInGeneral}>Split:        </Text>
+                    <InputSpinner
+                      min={1}
+                      step={1}
+                      colorLeft={this.state.leftColor}
+                      colorRight={"#4ddbff"}
+                      value={this.state.split}
+                      textColor='black'
+                      fontSize={20}
+                      maxLength={4}
+                      onChange={(num) => {
+                        this.updateSplit(num)
+                        this.setMinColor()
+                      }
+                      }
+                    />
+                  </View>
+                  <View style={{ paddingTop: 20, flexDirection: "row" }}>
+                    <Text style={styles.textInGeneral}>Split Tip:</Text>
+                    <TextInput
+                      style={styles.TextInputHiddenBorderStyle}
+                      defaultValue={this.state.tipPerPerson.toFixed(2)}
+                      keyboardType="numeric"
+                      onChangeText={this.updateAll.bind(this)}
+                      textAlign="right"
+                      editable={false}
+                    ></TextInput>
+                  </View>
+                  <View style={{ paddingTop: 20, flexDirection: "row" }}>
+                    <Text style={styles.textInGeneral}>Split Total:</Text>
+                    <TextInput
+                      style={styles.TextInputHiddenBorderStyle}
+                      defaultValue={this.state.amountPerPerson.toFixed(2)}
+                      keyboardType="numeric"
+                      onChangeText={this.updateAll.bind(this)}
+                      textAlign="right"
+                      editable={false}
+                    ></TextInput>
+                  </View>
                 </View>
               </View>) : null}
           </View>
