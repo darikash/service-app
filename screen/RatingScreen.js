@@ -21,6 +21,49 @@ export function normalize(size) {
 }
 export default class RatingScreen extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      maxTip: 0.00,
+      rateFriendliness: 0.00,
+      rateDrinks: 0.00,
+      rateCorrectOrder: 0.00,
+      rateOverallExperience: 0.00,
+      finalTip: 0.00,
+    };
+
+  }
+
+  rateFriendliness(value) {
+    this.state.rateFriendliness = value;
+    this.setState(this.state);
+    this.finalTipAddition();
+  }
+  rateDrinks(value) {
+    this.state.rateDrinks = value;
+    this.setState(this.state);
+    this.finalTipAddition();
+  }
+
+  rateCorrectOrder(value) {
+    this.state.rateCorrectOrder = value;
+    this.setState(this.state);
+    this.finalTipAddition();
+  }
+
+  rateOverallExperience(value) {
+    this.state.rateOverallExperience = value;
+    this.setState(this.state);
+    this.finalTipAddition();
+  }
+
+  finalTipAddition() {
+    this.state.finalTip = (this.state.maxTip / 4) * (this.state.rateOverallExperience + this.state.rateCorrectOrder + this.state.rateFriendliness + this.state.rateDrinks)
+    this.setState(this.state);
+  }
+
+
+
   render() {
     return (
       <SafeAreaView style={styles.container}>
@@ -45,7 +88,10 @@ export default class RatingScreen extends React.Component {
             maximumValue={30}
             minimumTrackTintColor="#00ffff"
             maximumTrackTintColor="#00ffff"
-
+            onValueChange={(num) => {
+              this.state.maxTip = num;
+              this.finalTipAddition();
+            }}
             step={1}
             flex={1}
           />
@@ -55,11 +101,11 @@ export default class RatingScreen extends React.Component {
           <Slider
             style={{ width: 350, height: 40 }}
             minimumValue={0}
-            maximumValue={30}
+            maximumValue={1}
             minimumTrackTintColor="#00ffff"
             maximumTrackTintColor="#00ffff"
             onValueChange={(num) => {
-              this.updateTip(num);
+              this.rateFriendliness(num);
             }}
             step={1}
             flex={1}
@@ -71,11 +117,11 @@ export default class RatingScreen extends React.Component {
           <Slider
             style={{ width: 350, height: 40 }}
             minimumValue={0}
-            maximumValue={30}
+            maximumValue={1}
             minimumTrackTintColor="#00ffff"
             maximumTrackTintColor="#00ffff"
             onValueChange={(num) => {
-              this.updateTip(num);
+              this.rateDrinks(num);
             }}
             step={1}
             flex={1}
@@ -87,11 +133,11 @@ export default class RatingScreen extends React.Component {
           <Slider
             style={{ width: 350, height: 40 }}
             minimumValue={0}
-            maximumValue={30}
+            maximumValue={1}
             minimumTrackTintColor="#00ffff"
             maximumTrackTintColor="#00ffff"
             onValueChange={(num) => {
-              this.updateTip(num);
+              this.rateCorrectOrder(num);
             }}
             step={1}
             flex={1}
@@ -102,11 +148,11 @@ export default class RatingScreen extends React.Component {
           <Slider
             style={{ width: 350, height: 40 }}
             minimumValue={0}
-            maximumValue={30}
+            maximumValue={1}
             minimumTrackTintColor="#00ffff"
             maximumTrackTintColor="#00ffff"
             onValueChange={(num) => {
-              this.updateTip(num);
+              this.rateOverallExperience(num);
             }}
             step={1}
             flex={1}
@@ -120,7 +166,11 @@ export default class RatingScreen extends React.Component {
               <Text style={styles.textInGeneral}>
                 Your recommended tip % is:{" "}
               </Text>
-
+              <TextInput
+                defaultValue={(this.state.finalTip).toFixed(2)}
+                textAlign="right"
+                editable={false}
+              ></TextInput>
             </View>
           </View>
         </View>
@@ -141,7 +191,6 @@ export default class RatingScreen extends React.Component {
     );
   }
 }
-
 
 const styles = StyleSheet.create({
   container: {
