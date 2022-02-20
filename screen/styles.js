@@ -76,11 +76,16 @@ export default StyleSheet.create({
         // flex: 1,
         // alignContent: 'flex-start',
         minHeight: 30
-
     },
     center: {
         flex: 1,
         justifyContent: 'center',
         alignContent: 'center'
+    },
+    TextInputStyleRating: {
+        borderWidth: 2,
+        borderRadius: 5,
+        borderColor: '#D3D3D3',
+        fontSize: 30
     }
 });
