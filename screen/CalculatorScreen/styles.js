@@ -52,6 +52,9 @@ export default StyleSheet.create({
         padding: 20,
         flex: 1
     },
+
+
+
     mainContent: {
         flex: 1,
         width: '100%',
@@ -61,21 +64,20 @@ export default StyleSheet.create({
         padding: '5%',
     },
     TextInputStyle: {
-        borderWidth: 3,
-        // flex: 1,
+        borderWidth: 2,
+        flex: 1,
         borderRadius: 5,
         borderColor: '#D3D3D3',
         fontSize: 30
     },
     labelTextContainer: {
-        // flex: 1,
-        // justifyContent: 'center',
-        // textAlign: 'left'
+        flex: 1,
+        justifyContent: 'center',
+        textAlign: 'left'
     },
     inputTypeContainter: {
-        // flex: 1,
+        // flex: 2,
         // alignContent: 'flex-start',
-        minHeight: 30
 
     },
     center: {

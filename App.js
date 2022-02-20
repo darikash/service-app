@@ -48,9 +48,9 @@ function MyTabBar({ state, descriptors, navigation }) {
             onLongPress={onLongPress}
             style={{ flex: 1 }}
           >
-            <Text style={{ color: isFocused ? '#673ab7' : '#222' }}>
+            {/* <Text style={{ color: isFocused ? '#673ab7' : '#222' }}>
               {label}
-            </Text>
+            </Text> */}
           </TouchableOpacity>
         );
       })}
