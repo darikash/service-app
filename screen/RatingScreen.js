@@ -3,6 +3,7 @@ import { StyleSheet, Alert, Text, View, TextInput, Button, TouchableWithoutFeedb
 import Slider from "@react-native-community/slider";
 import styles from './styles'
 import TouchHistoryMath from "react-native/Libraries/Interaction/TouchHistoryMath";
+import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 
 //dismisses the keyboard
@@ -125,7 +126,7 @@ export default class RatingScreen extends React.Component {
                 onContentSizeChange={this.onContentSizeChange}>
         <View style={{
           borderRadius: normalize(20),
-          backgroundColor: "white",
+          backgroundColor: "black",
           resizeMode: 'stretch',
           paddingLeft: 20,
           paddingRight: 20,
@@ -226,7 +227,7 @@ export default class RatingScreen extends React.Component {
 
         </View>
 
-        <View >
+        <View style={{backgroundColor: 'black'}}>
           <View style={styles.TipOuter}>
             <View style={{ paddingTop: 10, paddingBottom: 10, flexDirection: "column" }}>
               <Text style={styles.textInGeneral}>
@@ -241,12 +242,8 @@ export default class RatingScreen extends React.Component {
               {/* <Text style={styles.textInGeneral}>
                   {(this.state.tipPercentage * 100).toFixed(0)}{"%"}
                 </Text> */}
-            </View>
+              </View>
           </View>
-        </View>
-
-
-        <View >
           <View style={styles.TipOuter}>
             <View style={{ paddingTop: 10, paddingBottom: 10, flexDirection: "column" }}>
               <Text style={styles.textInGeneral}>
@@ -260,9 +257,8 @@ export default class RatingScreen extends React.Component {
               ></TextInput>
             </View>
           </View>
-        </View>
 
-        <View >
+
           <View style={styles.TipOuter}>
             <View style={{ paddingTop: 10, paddingBottom: 10, flexDirection: "column" }}>
               <Text style={styles.textInGeneral}>
@@ -275,20 +271,6 @@ export default class RatingScreen extends React.Component {
                 editable={false}
               ></TextInput>
             </View>
-          </View>
-        </View>
-
-
-        <View>
-          <View style={styles.fixToText}>
-            <Button
-              title="Tip Calculator"
-              onPress={() => Alert.alert('Left button pressed')}
-            />
-            <Button
-              title="Rate Your Waiter"
-              onPress={() => Alert.alert('Right button pressed')}
-            />
           </View>
         </View>
 
