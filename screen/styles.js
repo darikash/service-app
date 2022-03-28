@@ -17,13 +17,15 @@ export default StyleSheet.create({
     },
     textInGeneral: {
         color: "#585858",
-        lineHeight: 40,
-        fontSize: RFPercentage(5)
+        paddingLeft: '10%',
+        //alignSelf: "center",
+        //lineHeight: 40,
+        //fontSize: RFPercentage(2)
     },
     smallText: {
         color: "black",
         alignSelf: "center",
-        lineHeight: 40,
+        //lineHeight: 40,
     },
     displayCol: {
         flexDirection: 'column',
@@ -81,5 +83,12 @@ export default StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignContent: 'center'
-    }
+    },
+  TextInputStyleRating: {
+    borderWidth: 2,
+    borderRadius: 5,
+    borderColor: '#D3D3D3',
+    fontSize: 30
+  }
+
 });
