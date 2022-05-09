@@ -16,23 +16,47 @@ export default StyleSheet.create({
         marginVertical: 8,
     },
     textInGeneral: {
-        color: "#585858",
+        color: "white",
         paddingLeft: '10%',
+        textAlign: 'center',
         //alignSelf: "center",
         //lineHeight: 40,
         //fontSize: RFPercentage(2)
+        fontSize:16,
+
     },
-    smallText: {
-        color: "black",
-        alignSelf: "center",
+    tipStyle: {
+        color: "white",
+        paddingLeft: '10%',
+        //alignSelf: "center",
+        textAlign: 'left',
+        paddingRight: '5%',
         //lineHeight: 40,
+        //justifyContent: 'center',
+        //alignItems:'center',
     },
     displayCol: {
-        flexDirection: 'column',
-        width: '100%',
+        // flexDirection: 'column',
+        // width: '100%',
+        // flex: 1,
+        // paddingLeft: '5%',
+        // paddingRight: '5%'
+        // displayCol: {
+        flexDirection: 'row',
         flex: 1,
-        paddingLeft: '5%',
-        paddingRight: '5%'
+        alignItems:'center',
+        padding: '5%'
+        
+    },
+
+    textAmount: {
+        color: "white",
+        //paddingLeft: '0%',
+        //alignSelf: "center",
+        textAlign: 'left',
+        fontSize: 16,
+        //lineHeight: 40,
+        
     },
     scrollBar: {
         flexDirection: 'row',
@@ -67,7 +91,8 @@ export default StyleSheet.create({
         flex: 1,
         borderRadius: 5,
         borderColor: '#D3D3D3',
-        fontSize: 30
+        fontSize: 30,
+        color: "white"
     },
     labelTextContainer: {
         flex: 1,
@@ -85,10 +110,14 @@ export default StyleSheet.create({
         alignContent: 'center'
     },
   TextInputStyleRating: {
-    borderWidth: 2,
-    borderRadius: 5,
+    color: "white",
+    borderWidth: 4,
+    borderRadius: 10,
     borderColor: '#D3D3D3',
-    fontSize: 30
+    fontSize: 30,
+    borderWidth: 2,
+    flex: 1,
+    height: 40,
   }
 
 });

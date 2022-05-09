@@ -125,7 +125,7 @@ export default class RatingScreen extends React.Component {
                 scrollEnabled={true}
                 onContentSizeChange={this.onContentSizeChange}>
         <View style={{
-          borderRadius: normalize(20),
+          //borderRadius: normalize(20),
           backgroundColor: "black",
           resizeMode: 'stretch',
           paddingLeft: 20,
@@ -133,24 +133,26 @@ export default class RatingScreen extends React.Component {
           paddingBottom: 20,
           paddingTop: 20,
           overflow: "hidden",
-          height: 500, paddingTop: 10, paddingBottom: 10, flexDirection: "column"
+          //height: 700, 
+
         }}>
 
-
-                <Text style={styles.textInGeneral}>Amount:  </Text>
+        <View style={styles.displayCol}>
+                <Text style={styles.textAmount}>Amount:  </Text>
                 <TextInput
                   style={styles.TextInputStyleRating}
                   keyboardType="numeric"
                   onChangeText={this.updateAll.bind(this)}
                   textAlign="right"
-                  maxLength={7}
+                  maxLength={8}
                 ></TextInput>
-
-
-          <Text style={styles.textInGeneral}> Maximum Tip Contribution</Text>
-          <Text style={styles.smallText}>(min 0% to max 30%)</Text>
+       </View>
+       <View style={{ padding: 5 }}>
+          <Text style={styles.textInGeneral}> Maximum Tip Contribution (0% to 30%)</Text>
+        </View>    
+          <View style={{ padding: 5 , flexDirection: "row" }}>
           <Slider
-            style={{ width: 350, height: 40 }}
+            style={{ width: 200, height: 40 }}
             minimumValue={0}
             maximumValue={30}
             minimumTrackTintColor="#00ffff"
@@ -161,12 +163,17 @@ export default class RatingScreen extends React.Component {
             }}
             step={1}
             flexGrow ={1}
-          />
+            />
+          <Text style={styles.textInGeneral}>
+                {this.state.maxTip}{"%"}
+          </Text>
+          </View>
 
           <Text style={styles.textInGeneral}> Rate your waiter friendliness </Text>
-          <Text style={styles.smallText}>(0 being the worst and 10 being best)</Text>
+          <Text style={styles.textInGeneral}>(0 being the worst and 10 being best)</Text>
+          <View style={{ padding: 5 , flexDirection: "row" }}>
           <Slider
-            style={{ width: 350, height: 40 }}
+            style={{ width: 200, height: 40 }}
             minimumValue={0}
             maximumValue={1}
             minimumTrackTintColor="#00ffff"
@@ -177,10 +184,13 @@ export default class RatingScreen extends React.Component {
             step={0.1}
             flexGrow ={1}
           />
-
+          <Text style={styles.textInGeneral}>
+                {this.state.rateFriendliness}
+          </Text>
+          </View>
 
           <Text style={styles.textInGeneral}>Were your drinks always filled?</Text>
-          <Text style={styles.smallText}>(0 being the worst and 10 being best)</Text>
+          <Text style={styles.textInGeneral}>(0 being the worst and 10 being best)</Text>
           <Slider
             style={{ width: 350, height: 40 }}
             minimumValue={0}
@@ -195,7 +205,7 @@ export default class RatingScreen extends React.Component {
           />
 
           <Text style={styles.textInGeneral}>Was your order correct?</Text>
-          <Text style={styles.smallText}>(0 being the worst and 10 being best)</Text>
+          <Text style={styles.textInGeneral}>(0 being the worst and 10 being best)</Text>
 
           <Slider
             style={{ width: 350, height: 40 }}
@@ -211,7 +221,7 @@ export default class RatingScreen extends React.Component {
           />
 
           <Text style={styles.textInGeneral}>Rate your overall experience</Text>
-          <Text style={styles.smallText}>(0 being the worst and 10 being best)</Text>
+          <Text style={styles.textInGeneral}>(0 being the worst and 10 being best)</Text>
           <Slider
             style={{ width: 350, height: 40 }}
             minimumValue={0}
@@ -224,17 +234,47 @@ export default class RatingScreen extends React.Component {
             step={0.1}
             flexGrow={1}
           />
+{/* 
+          <Text style={styles.textInGeneral}>Your recommended tip % is:{" "}</Text>
+              <TextInput
+                //defaultValue={(this.state.finalTip).toFixed(2)}
+                defaultValue={(this.state.finalTip).toFixed(2)}
+                textAlign="right"
+                editable={false}
+              ></TextInput>
+
+          <Text style={styles.textInGeneral}>Your recommended tip amount is:{" "}</Text>
+              <TextInput
+                defaultValue={(this.state.recommendedTipAmount).toFixed(2)}
+                onChangeText={this.updateAll.bind(this)}
+                textAlign="right"
+                editable={false}
+              ></TextInput>
+          <Text style={styles.textInGeneral}>Your recommended total is:{" "}</Text>
+              <TextInput
+                defaultValue={(this.state.recommendedTotal).toFixed(2)}
+                onChangeText={this.updateAll.bind(this)}
+                textAlign="right"
+                editable={false}
+              ></TextInput> */}
 
         </View>
+
+      {/* </SafeAreaView>
+      </ScrollView>
+      </DissmisKeyBoard>
+    );
+  }
+} */}
 
         <View style={{backgroundColor: 'black'}}>
           <View style={styles.TipOuter}>
             <View style={{ paddingTop: 10, paddingBottom: 10, flexDirection: "column" }}>
-              <Text style={styles.textInGeneral}>
+              <Text style={styles.tipStyle}>
                 Your recommended tip % is:{" "}
               </Text>
-              <TextInput
-                //defaultValue={(this.state.finalTip).toFixed(2)}
+              <TextInput 
+                style={styles.tipStyle}
                 defaultValue={(this.state.finalTip).toFixed(2)}
                 textAlign="right"
                 editable={false}
@@ -246,10 +286,11 @@ export default class RatingScreen extends React.Component {
           </View>
           <View style={styles.TipOuter}>
             <View style={{ paddingTop: 10, paddingBottom: 10, flexDirection: "column" }}>
-              <Text style={styles.textInGeneral}>
+              <Text style={styles.tipStyle}>
                 Your recommended tip amount is:{" "}
               </Text>
               <TextInput
+                style={styles.tipStyle}
                 defaultValue={(this.state.recommendedTipAmount).toFixed(2)}
                 onChangeText={this.updateAll.bind(this)}
                 textAlign="right"
@@ -261,10 +302,11 @@ export default class RatingScreen extends React.Component {
 
           <View style={styles.TipOuter}>
             <View style={{ paddingTop: 10, paddingBottom: 10, flexDirection: "column" }}>
-              <Text style={styles.textInGeneral}>
+              <Text style={styles.tipStyle}>
                 Your recommended total is:{" "}
               </Text>
               <TextInput
+                style={styles.tipStyle}
                 defaultValue={(this.state.recommendedTotal).toFixed(2)}
                 onChangeText={this.updateAll.bind(this)}
                 textAlign="right"
