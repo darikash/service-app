@@ -21,13 +21,13 @@ const RatingScreen = () => {
   const [finalAmount, setFinalAmount] = useState(0.00)
   useEffect(() => {
     const maxTipAmount = maxTipPercent * amount
-
+    console.log(amount)
     setTipPercentage(maxTipAmount )
   })
   return (
       <ScrollView style={{...styles.container,  flexGrow: 1}} scrollEnabled={true}>
 
-        <Amount udpateAll={setAmount}/>
+        <Amount updateAll={setAmount}/>
         <Text style={styles.textInGeneral}>(0 being the worst and 10 being best)</Text>
         <Question text={"Maximum Tip Contribution (0% to 30%)"} value={maxTipPercent} setValue={setMaxTipPercent} maxValue={thirty}/>
         <Question text={"Rate your waiter friendliness"} value={rateFriendliness} setValue={setRateFriendliness} maxValue={ten}/>
