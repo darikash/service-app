@@ -4,10 +4,10 @@ import { Text, View, TextInput} from "react-native";
 import {styles} from './styles'
 const tipPercentage = (props) => {
     return (
-                <View style={{ padding: 5, flexDirection: "row" }}>
+                <View style={{ display: 'flex', flexDirection: "row" , paddingTop:20}}>
                     <Text style={styles.textInGeneral}>Tip % : </Text>
                     <Slider
-                        style={{ width: 200, height: 40 }}
+                        style={{ flex: 2 }}
                         minimumValue={0}
                         maximumValue={30}
                         minimumTrackTintColor="#00ffff"

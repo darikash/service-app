@@ -3,19 +3,16 @@ import { Text, View, TextInput} from "react-native";
 import {styles} from './styles'
 
 const DisplayText = (props) => {
-  console.log(props.displayTipAmount)
+
     return (
-        <View style={styles.displayCol}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingTop: 20}}>
                  <Text style={styles.textInGeneral}>
-                   Tip Total:{" "}
+                   {props.text}
                  </Text>
-                 <TextInput
-                   style={styles.TextInputHiddenBorderStyle}
-                   defaultValue={Number(props.displayTipAmount).toFixed(2)}
-                   textAlign="right"
-                   editable={false}
-                 ></TextInput>
-               </View>
+                 <Text style={styles.textInGeneral}>
+                   { props.displayAmount.toFixed(2)}
+                 </Text>
+          </View>
     )
 }
 

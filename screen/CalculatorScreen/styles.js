@@ -3,9 +3,10 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginHorizontal: 0,
         backgroundColor: 'black',
-        padding: 10
+        padding: 10,
+        paddingTop: 40,
+        width: 'auto'
     },
 
     title: {
@@ -27,7 +28,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         flex: 1,
         alignItems:'center',
-        padding: '5%'
+        padding: '10%'
     },
     scrollBar: {
         flexDirection: 'row',

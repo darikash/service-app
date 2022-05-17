@@ -43,6 +43,7 @@ function MyTabBar({ state, descriptors, navigation }) {
             accessibilityRole="button"
             accessibilityState={isFocused ? { selected: true } : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel}
+            headerMode="none"
             testID={options.tabBarTestID}
             onPress={onPress}
             onLongPress={onLongPress}
@@ -61,10 +62,12 @@ function MyTabBar({ state, descriptors, navigation }) {
 const Tab = createBottomTabNavigator();
 export default function App() {
   return (
-    <NavigationContainer style={{backgroundColor: 'black'}}>
-      <Tab.Navigator  style={{backgroundColor: 'black'}} tabBar={(props) => <MyTabBar   style={{backgroundColor: 'black'}} {...props} />}>
-        <Tab.Screen style={{backgroundColor: 'black'}}  name="Calculator" component={CalculatorScreen} />
-        <Tab.Screen name="Ratings" component={RatingScreen} />
+    <NavigationContainer  style={{backgroundColor: 'black'}}>
+      <Tab.Navigator screenOptions={{
+    headerShown: false,
+  }} style={{backgroundColor: 'black'}} tabBar={(props) => <MyTabBar   style={{backgroundColor: 'black'}} {...props} />}>
+        <Tab.Screen  style={{backgroundColor: 'black'}}  name="Calculator" component={CalculatorScreen} />
+        <Tab.Screen  name="Ratings" component={RatingScreen} />
       </Tab.Navigator>
     </NavigationContainer>)
 }

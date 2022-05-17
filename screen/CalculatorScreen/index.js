@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, TextInput, Button, TouchableWithoutFeedback, Keyboard, ScrollView, SafeAreaView, Dimensions, Platform, PixelRatio } from "react-native";
 import Slider from "@react-native-community/slider";
 import InputSpinner from "react-native-input-spinner";
@@ -7,6 +7,9 @@ import { thisExpression } from "@babel/types";
 import Amount from "./Amount";
 import TipPercentage from "./TipPercentage";
 import DisplayText from "./DisplayText";
+import SplitScreen from "./SplitScreen";
+import { cos, set } from "react-native-reanimated";
+import { State } from "react-native-gesture-handler";
 //import CalcInput from '../components/CalcInput';
 //import CalcResultDisplay from '../components/CalcResultDisplay';
 
@@ -23,31 +26,25 @@ const CalculatorScreen = () => {
   const [cost, setCost] = useState(0.00)
   const [tipPercentage, setTipPercentage] = useState(0.00)
   const [displayTipAmount, setDisplayTipAmount] = useState(0.00)
-  const [split, setSplit] = useState(1)
   const [displayTotal, setDisplayTotal] = useState(0.00)
-  const [amountPerPerson, setAmountPerPerson] = useState(0.00)
-  const [shouldShow, setShouldShow] = useState(false)
-  const [tipPerPerson, setTipPerPerson] = useState(0.00)
-  const updateAll= (value) => {
-    setCost(Number(value));
-    setDisplayTipAmount(Number(value) * tipPercentage);
-    setAmountPerPerson(Number((cost + displayTipAmount) / split));
-    setDisplayTotal(Number(cost + displayTipAmount));
-    setDisplayTotal(Number(displayTotal).toFixed(2));
-    setAmountPerPerson(Number(amountPerPerson).toFixed(2));
-    setDisplayTipAmount(Number(displayTipAmount).toFixed(2));
-  }
+  useEffect(() => {
+    console.log(cost);
+    console.log(tipPercentage);
+    setDisplayTipAmount(cost * tipPercentage / 100)
+    setDisplayTotal(parseFloat(cost) + parseFloat(displayTipAmount))
+  })
 
-console.log(tipPercentage)
-return ( <DissmisKeyBoard>
-          <ScrollView style={styles.container} scrollEnabled={true}>
-            <Amount updateAll={ updateAll}/>
-            
+return ( 
+          <ScrollView style={{...styles.container,  flexGrow: 1}} scrollEnabled={true}>
+            <View style={{borderRadius: 15, borderWidth: 1, borderColor: 'white', display: 'flex', padding: 20}}>
+            <Amount updateAll={ setCost}/>
             <TipPercentage setTipPercentage={setTipPercentage} tipPercentage={tipPercentage}/>
-            <DisplayText displayTipAmount={displayTipAmount}/>
-            <DisplayText displayTipAmount={displayTipAmount}/>
+            <DisplayText displayAmount={displayTipAmount} text={"Tip Total:"}/>
+            <DisplayText displayAmount={displayTotal} text={"Total:"}/>
+            </View>
+            <SplitScreen totalAmount={cost} tipPercentage={tipPercentage / 100}/>
           </ScrollView>
-         </DissmisKeyBoard>)
+        )
 
 }
 
