@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import CalculatorScreen from './screen/CalculatorScreen/index';
-import RatingScreen from './screen/RatingScreen';
+import RatingScreen from './screen/RatingScreen/RatingScreen';
 
 
 function MyTabBar({ state, descriptors, navigation }) {

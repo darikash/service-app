@@ -1,14 +1,14 @@
 import React from 'react';
 import { Text, View, TextInput} from "react-native";
 import {styles} from './styles'
-const Amount = (props) => {
+const Amount = ({updateAll}) => {
   return (
     <View style={{flexDirection: 'row'}}>
     <Text style={styles.textInGeneral}>Amount:  </Text>
     <TextInput
       style={styles.TextInputStyle}
       keyboardType="numeric"
-      onChangeText={newText => props.updateAll(newText)}
+      onChangeText={newText => updateAll(newText)}
       textAlign="right"
       maxLength={8}
     />

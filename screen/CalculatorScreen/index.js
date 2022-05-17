@@ -37,7 +37,7 @@ const CalculatorScreen = () => {
 return ( 
           <ScrollView style={{...styles.container,  flexGrow: 1}} scrollEnabled={true}>
             <View style={{borderRadius: 15, borderWidth: 1, borderColor: 'white', display: 'flex', padding: 20}}>
-            <Amount updateAll={ setCost}/>
+            <Amount updateAll={setCost}/>
             <TipPercentage setTipPercentage={setTipPercentage} tipPercentage={tipPercentage}/>
             <DisplayText displayAmount={displayTipAmount} text={"Tip Total:"}/>
             <DisplayText displayAmount={displayTotal} text={"Total:"}/>

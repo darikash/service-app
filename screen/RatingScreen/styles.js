@@ -1,30 +1,24 @@
 import { StyleSheet } from "react-native";
 import { RFPercentage } from "react-native-responsive-fontsize";
-export default StyleSheet.create({
+export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        marginHorizontal: 0,
-        flexDirection: 'column',
         backgroundColor: 'black',
-        width: '100%',
-        height: '100%',
+        padding: 10,
+        paddingTop: 40,
+        width: 'auto'
     },
-
+    textInGeneral: {
+        color: 'white',
+        lineHeight: 40,
+        fontSize:25
+        //fontSize: RFPercentage(2)
+    },
     title: {
         textAlign: 'center',
         marginVertical: 8,
     },
-    textInGeneral: {
-        color: "white",
-        paddingLeft: '10%',
-        textAlign: 'center',
-        //alignSelf: "center",
-        //lineHeight: 40,
-        //fontSize: RFPercentage(2)
-        fontSize:16,
 
-    },
     tipStyle: {
         color: "white",
         paddingLeft: '10%',

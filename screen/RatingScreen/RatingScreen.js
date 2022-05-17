@@ -1,55 +1,212 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Alert, Text, View, TextInput, Button, TouchableWithoutFeedback, Keyboard, ScrollView, SafeAreaView, Dimensions, Platform, PixelRatio } from "react-native";
 import Slider from "@react-native-community/slider";
-import styles from './styles'
+import {styles} from './styles'
 import TouchHistoryMath from "react-native/Libraries/Interaction/TouchHistoryMath";
 import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
+import Amount from "./Amount" 
+import Question from "./Question";
+import DisplayText from "../CalculatorScreen/DisplayText";
+const RatingScreen = () => {
+  const [amount, setAmount] = useState(0.00)
+  const [maxTipPercent, setMaxTipPercent] = useState(0)
+  const [rateFriendliness, setRateFriendliness] = useState(0)
+  const [rateDrinks, setRateDrinks] = useState(0)
+  const ten = 10;
+  const thirty = 30;
+  const [rateOrderCorrectness, setRateOrderCorrectness] = useState(0)
+  const [rateExperience, setRateExperience] = useState(0)
+  const [tipPercentage, setTipPercentage] = useState(0)
+  const [tipToal, setTipTotal] = useState(0.00)
+  const [finalAmount, setFinalAmount] = useState(0.00)
+  useEffect(() => {
+    const maxTipAmount = maxTipPercent * amount
+
+    setTipPercentage(maxTipAmount )
+  })
+  return (
+      <ScrollView style={{...styles.container,  flexGrow: 1}} scrollEnabled={true}>
+
+        <Amount udpateAll={setAmount}/>
+        <Text style={styles.textInGeneral}>(0 being the worst and 10 being best)</Text>
+        <Question text={"Maximum Tip Contribution (0% to 30%)"} value={maxTipPercent} setValue={setMaxTipPercent} maxValue={thirty}/>
+        <Question text={"Rate your waiter friendliness"} value={rateFriendliness} setValue={setRateFriendliness} maxValue={ten}/>
+        <Question text={"Were your drinks always filled?"} value={rateDrinks} setValue={setRateDrinks} maxValue={ten}/>
+        <Question text={"Was your order correct?"} value={rateOrderCorrectness} setValue={setRateOrderCorrectness} maxValue={ten}/>
+        <Question text={"Rate your overall experience"} value={rateExperience} setValue={setRateExperience} maxValue={ten}/>
+        <DisplayText text={"Recommended Tip %:"} displayAmount={tipPercentage}/>
+        <DisplayText text={"Tip Total:"} displayAmount={tipToal}/>
+        <DisplayText text={"Total:"} displayAmount={finalAmount}/>
+      
+      </ScrollView >
+
+)}
 
 
-//dismisses the keyboard
-const DissmisKeyBoard = ({ children }) => (
-  <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-    {children}
-  </TouchableWithoutFeedback>
-);
+export default RatingScreen;
+{/* 
+      
+  
+     <View style={{ padding: 5 }}>
+        <Text style={styles.textInGeneral}> Maximum Tip Contribution (0% to 30%)</Text>
+      </View>    
+        <View style={{ padding: 5 , flexDirection: "row" }}>
+        <Slider
+          style={{ width: 200, height: 40 }}
+          minimumValue={0}
+          maximumValue={30}
+          minimumTrackTintColor="#00ffff"
+          maximumTrackTintColor="#00ffff"
+          onValueChange={(num) => {
+            this.state.maxTip = num;
+            this.finalTipAddition();
+          }}
+          step={1}
+          flexGrow ={1}
+          />
+        <Text style={styles.textInGeneral}>
+              {this.state.maxTip}{"%"}
+        </Text>
+        </View>
+
+        <Text style={styles.textInGeneral}> Rate your waiter friendliness </Text>
+        <Text style={styles.textInGeneral}>(0 being the worst and 10 being best)</Text>
+        <View style={{ padding: 5 , flexDirection: "row" }}>
+        <Slider
+          style={{ width: 200, height: 40 }}
+          minimumValue={0}
+          maximumValue={1}
+          minimumTrackTintColor="#00ffff"
+          maximumTrackTintColor="#00ffff"
+          onValueChange={(num) => {
+            this.rateFriendliness(num);
+          }}
+          step={0.1}
+          flexGrow ={1}
+        />
+        <Text style={styles.textInGeneral}>
+              {this.state.rateFriendliness}
+        </Text>
+        </View>
+
+        <Text style={styles.textInGeneral}>Were your drinks always filled?</Text>
+        <Text style={styles.textInGeneral}>(0 being the worst and 10 being best)</Text>
+        <Slider
+          style={{ width: 350, height: 40 }}
+          minimumValue={0}
+          maximumValue={1}
+          minimumTrackTintColor="#00ffff"
+          maximumTrackTintColor="#00ffff"
+          onValueChange={(num) => {
+            this.rateDrinks(num);
+          }}
+          step={0.1}
+          flexGrow={1}
+        />
+
+        <Text style={styles.textInGeneral}>Was your order correct?</Text>
+        <Text style={styles.textInGeneral}>(0 being the worst and 10 being best)</Text>
+
+        <Slider
+          style={{ width: 350, height: 40 }}
+          minimumValue={0}
+          maximumValue={1}
+          minimumTrackTintColor="#00ffff"
+          maximumTrackTintColor="#00ffff"
+          onValueChange={(num) => {
+            this.rateCorrectOrder(num);
+          }}
+          step={0.1}
+          flexGrow={1}
+        />
+
+        <Text style={styles.textInGeneral}>Rate your overall experience</Text>
+        <Text style={styles.textInGeneral}>(0 being the worst and 10 being best)</Text>
+        <Slider
+          style={{ width: 350, height: 40 }}
+          minimumValue={0}
+          maximumValue={1}
+          minimumTrackTintColor="#00ffff"
+          maximumTrackTintColor="#00ffff"
+          onValueChange={(num) => {
+            this.rateOverallExperience(num);
+          }}
+          step={0.1}
+          flexGrow={1}
+        />
 
 
-const { height } = Dimensions.get('window');
-const {
-  width: SCREEN_WIDTH,
-  height: SCREEN_HEIGHT,
-} = Dimensions.get('window');
+      </View>
+ 
+
+      <View style={{backgroundColor: 'black'}}>
+        <View style={styles.TipOuter}>
+          <View style={{ paddingTop: 10, paddingBottom: 10, flexDirection: "column" }}>
+            <Text style={styles.tipStyle}>
+              Your recommended tip % is:{" "}
+            </Text>
+            <TextInput 
+              style={styles.tipStyle}
+              defaultValue={(this.state.finalTip).toFixed(2)}
+              textAlign="right"
+              editable={false}
+            ></TextInput>
+             <Text style={styles.textInGeneral}>
+                {(this.state.tipPercentage * 100).toFixed(0)}{"%"}
+              </Text> *
+            </View>
+        </View>
+        <View style={styles.TipOuter}>
+          <View style={{ paddingTop: 10, paddingBottom: 10, flexDirection: "column" }}>
+            <Text style={styles.tipStyle}>
+              Your recommended tip amount is:{" "}
+            </Text>
+            <TextInput
+              style={styles.tipStyle}
+              defaultValue={(this.state.recommendedTipAmount).toFixed(2)}
+              onChangeText={this.updateAll.bind(this)}
+              textAlign="right"
+              editable={false}
+            ></TextInput>
+          </View>
+        </View>
 
 
+        <View style={styles.TipOuter}>
+          <View style={{ paddingTop: 10, paddingBottom: 10, flexDirection: "column" }}>
+            <Text style={styles.tipStyle}>
+              Your recommended total is:{" "}
+            </Text>
+            <TextInput
+              style={styles.tipStyle}
+              defaultValue={(this.state.recommendedTotal).toFixed(2)}
+              onChangeText={this.updateAll.bind(this)}
+              textAlign="right"
+              editable={false}
+            ></TextInput>
+          </View>
+        </View>
+      </View>
 
+    </SafeAreaView>
+    </ScrollView>
+    </DissmisKeyBoard>
+  );
+  //constructor(props) {
+    // super(props);
+    // this.state = {
+    //   maxTip: 0.00,
+    //   rateFriendliness: 0.00,
+    //   rateDrinks: 0.00,
+    //   rateCorrectOrder: 0.00,
+    //   rateOverallExperience: 0.00,
+    //   finalTip: 0.00,
+    //   amountInputValue: 0.00,
+    //   recommendedTipAmount: 0.00,
+    //   recommendedTotal: 0.00
+    // };
 
-const scale = SCREEN_WIDTH / 460;
-
-export function normalize(size) {
-  const newSize = size * scale
-  if (Platform.OS === 'ios') {
-    return Math.round(PixelRatio.roundToNearestPixel(newSize))
-  } else {
-    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
-  }
-}
-export default class RatingScreen extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      maxTip: 0.00,
-      rateFriendliness: 0.00,
-      rateDrinks: 0.00,
-      rateCorrectOrder: 0.00,
-      rateOverallExperience: 0.00,
-      finalTip: 0.00,
-      amountInputValue: 0.00,
-      recommendedTipAmount: 0.00,
-      recommendedTotal: 0.00
-    };
-
-  }
+  //}
 
 
   updateAll(value) {
@@ -234,7 +391,7 @@ export default class RatingScreen extends React.Component {
             step={0.1}
             flexGrow={1}
           />
-{/* 
+
           <Text style={styles.textInGeneral}>Your recommended tip % is:{" "}</Text>
               <TextInput
                 //defaultValue={(this.state.finalTip).toFixed(2)}
@@ -256,7 +413,7 @@ export default class RatingScreen extends React.Component {
                 onChangeText={this.updateAll.bind(this)}
                 textAlign="right"
                 editable={false}
-              ></TextInput> */}
+              ></TextInput> 
 
         </View>
 
@@ -265,9 +422,9 @@ export default class RatingScreen extends React.Component {
       </DissmisKeyBoard>
     );
   }
-} */}
+} */
 
-        <View style={{backgroundColor: 'black'}}>
+        /* <View style={{backgroundColor: 'black'}}>
           <View style={styles.TipOuter}>
             <View style={{ paddingTop: 10, paddingBottom: 10, flexDirection: "column" }}>
               <Text style={styles.tipStyle}>
@@ -281,7 +438,7 @@ export default class RatingScreen extends React.Component {
               ></TextInput>
               {/* <Text style={styles.textInGeneral}>
                   {(this.state.tipPercentage * 100).toFixed(0)}{"%"}
-                </Text> */}
+                </Text> 
               </View>
           </View>
           <View style={styles.TipOuter}>
@@ -321,7 +478,7 @@ export default class RatingScreen extends React.Component {
       </DissmisKeyBoard>
     );
   }
-}
+} */
 
 // const styles = StyleSheet.create({
 //   container: {
@@ -391,10 +548,11 @@ export default class RatingScreen extends React.Component {
 //     fontSize: 30
 //   }
 // })
-;
+
 
 
 // BUTTON
       //  title="Press me"
       //  disabled
-      //  onPress={() => Alert.alert('Cannot press this one')}
+//  onPress={() => Alert.alert('Cannot press this one')} */
+}
