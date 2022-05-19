@@ -32,18 +32,30 @@ const RatingScreen = () => {
   })
   return (
       <ScrollView style={{...styles.container,  flexGrow: 1}} scrollEnabled={true}>
-
+        
+        <View style={{borderRadius: 15, borderWidth: 1, borderColor: 'white', display: 'flex', padding: 20}}>
         <Amount updateAll={setAmount}/>
-        <Text style={styles.textInGeneral}>(0 being the worst and 10 being best)</Text>
-        <Question text={"Maximum Tip Contribution (0% to 30%)"} value={maxTipPercent} setValue={setMaxTipPercent} maxValue={thirty}/>
+        <Question text={"Select Your Maximum Tip Contribution (0% to 30%)"} value={maxTipPercent} setValue={setMaxTipPercent} maxValue={thirty}/>
+        </View>
+
+        <Text style={styles.rateText}>Rate your water below:</Text>
+        {/* <Text style={styles.rateText}>(0 being the worst and 10 being best)</Text> */}
+        <Text style={styles.rateText}>from 0 (worst) to 10 (best)</Text>
+
+        <View style={{borderRadius: 15, borderWidth: 1, borderColor: 'white', display: 'flex', padding: 10}}>
         <Question text={"Rate your waiter friendliness"} value={rateFriendliness} setValue={setRateFriendliness} maxValue={ten}/>
         <Question text={"Were your drinks always filled?"} value={rateDrinks} setValue={setRateDrinks} maxValue={ten}/>
         <Question text={"Was your order correct?"} value={rateOrderCorrectness} setValue={setRateOrderCorrectness} maxValue={ten}/>
         <Question text={"Rate your overall experience"} value={rateExperience} setValue={setRateExperience} maxValue={ten}/>
+        </View>
+
+        <Text style={styles.rateText}></Text>
+
+        <View style={{borderRadius: 15, borderWidth: 1, borderColor: 'white', display: 'flex', padding: 20}}>
         <DisplayText text={"Recommended Tip %:"} displayAmount={tipPercentage}/>
         <DisplayText text={"Tip Total:"} displayAmount={tipToal}/>
         <DisplayText text={"Total:"} displayAmount={finalAmount}/>
-      
+        </View>
       </ScrollView >
 
 )}

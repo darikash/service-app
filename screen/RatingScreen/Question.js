@@ -10,7 +10,6 @@ const Question = (props) => {
     return (
         <View>
             <Text style={styles.textInGeneral}>{props.text}</Text>
-            
             <View style={{ padding: 5 , flexDirection: "row" }}>
                 <Slider
                 style={{ width: 200, height: 40 }}
@@ -21,6 +20,7 @@ const Question = (props) => {
                 onValueChange={(num) => {
                     props.setValue(num);
                 }}
+                
                 step={1}
                 flexGrow ={1}
                 />

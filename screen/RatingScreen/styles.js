@@ -14,6 +14,13 @@ export const styles = StyleSheet.create({
         fontSize:25
         //fontSize: RFPercentage(2)
     },
+    rateText: {
+        color: 'white',
+        lineHeight: 40,
+        fontSize:25,
+        textAlign: 'center'
+        //fontSize: RFPercentage(2)
+    },
     title: {
         textAlign: 'center',
         marginVertical: 8,
@@ -83,10 +90,11 @@ export const styles = StyleSheet.create({
     TextInputStyle: {
         borderWidth: 2,
         flex: 1,
-        borderRadius: 5,
+        borderRadius: 10,
         borderColor: '#D3D3D3',
         fontSize: 30,
-        color: "white"
+        color: 'white',
+        height: 50
     },
     labelTextContainer: {
         flex: 1,
