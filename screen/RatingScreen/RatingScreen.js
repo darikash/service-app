@@ -20,9 +20,15 @@ const RatingScreen = () => {
   const [tipToal, setTipTotal] = useState(0.00)
   const [finalAmount, setFinalAmount] = useState(0.00)
   useEffect(() => {
-    const maxTipAmount = maxTipPercent * amount
+    const recommendedTipAmount = maxTipPercent * ((rateFriendliness + rateDrinks + rateOrderCorrectness + rateExperience)/4) * 0.10
+    const tipTotal = (recommendedTipAmount * 0.01) * amount
+    const total = tipTotal + amount
+
     console.log(amount)
-    setTipPercentage(maxTipAmount )
+
+    setTipPercentage(recommendedTipAmount)
+    setTipTotal(tipTotal)
+    setFinalAmount(total)
   })
   return (
       <ScrollView style={{...styles.container,  flexGrow: 1}} scrollEnabled={true}>
