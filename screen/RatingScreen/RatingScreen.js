@@ -50,7 +50,7 @@ const RatingScreen = () => {
         <Text style={styles.rateText}></Text>
 
         <View style={{borderRadius: 15, borderWidth: 1, borderColor: 'white', display: 'flex', padding: 20}}>
-        <DisplayText text={"Recommended Tip %:"} displayAmount={tipPercentage}/>
+        <DisplayText text={"Tip %:"} displayAmount={tipPercentage}/>
         <DisplayText text={"Tip Total:"} displayAmount={tipToal}/>
         <DisplayText text={"Total:"} displayAmount={finalAmount}/>
         </View>

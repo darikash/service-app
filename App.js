@@ -67,7 +67,7 @@ export default function App() {
     headerShown: false,
   }} style={{backgroundColor: 'black'}} tabBar={(props) => <MyTabBar   style={{backgroundColor: 'black'}} {...props} />}>
         <Tab.Screen  style={{backgroundColor: 'black'}}  name="Calculator" component={CalculatorScreen} />
-        <Tab.Screen  name="Ratings" component={RatingScreen} />
+        <Tab.Screen  name="Rate My Waiter" component={RatingScreen} />
       </Tab.Navigator>
     </NavigationContainer>)
 }

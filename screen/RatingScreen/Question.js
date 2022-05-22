@@ -20,7 +20,6 @@ const Question = (props) => {
                 onValueChange={(num) => {
                     props.setValue(num);
                 }}
-                
                 step={1}
                 flexGrow ={1}
                 />
