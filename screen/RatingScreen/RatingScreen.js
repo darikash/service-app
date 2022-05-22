@@ -4,7 +4,7 @@ import Slider from "@react-native-community/slider";
 import {styles} from './styles'
 import TouchHistoryMath from "react-native/Libraries/Interaction/TouchHistoryMath";
 import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
-import Amount from "./Amount" 
+import Amount from "../CalculatorScreen/Amount" 
 import Question from "./Question";
 import DisplayText from "../CalculatorScreen/DisplayText";
 const RatingScreen = () => {
@@ -20,25 +20,23 @@ const RatingScreen = () => {
   const [tipToal, setTipTotal] = useState(0.00)
   const [finalAmount, setFinalAmount] = useState(0.00)
   useEffect(() => {
-    const recommendedTipAmount = maxTipPercent * ((rateFriendliness + rateDrinks + rateOrderCorrectness + rateExperience)/4) * 0.10
+    const recommendedTipAmount = maxTipPercent * (parseInt(parseInt(rateFriendliness) + parseInt(rateDrinks) + parseInt(rateOrderCorrectness) + parseInt(rateExperience))/4) * 0.10
     const tipTotal = (recommendedTipAmount * 0.01) * amount
-    const total = tipTotal + amount
-
-    console.log(amount)
+    const total = parseFloat(parseFloat(tipTotal) + parseFloat(amount))
 
     setTipPercentage(recommendedTipAmount)
     setTipTotal(tipTotal)
     setFinalAmount(total)
   })
   return (
-      <ScrollView style={{...styles.container,  flexGrow: 1}} scrollEnabled={true}>
+      <ScrollView style={{...styles.container,  flexGrow: 1, paddingBottom: 20}} scrollEnabled={true}>
         
         <View style={{borderRadius: 15, borderWidth: 1, borderColor: 'white', display: 'flex', padding: 20}}>
-        <Amount updateAll={setAmount}/>
+        <Amount updateAll={setAmount} initValue={amount}/>
         <Question text={"Select Your Maximum Tip Contribution (0% to 30%)"} value={maxTipPercent} setValue={setMaxTipPercent} maxValue={thirty}/>
         </View>
 
-        <Text style={styles.rateText}>Rate your water below:</Text>
+        <Text style={styles.rateText}>Rate your waiter below:</Text>
         {/* <Text style={styles.rateText}>(0 being the worst and 10 being best)</Text> */}
         <Text style={styles.rateText}>from 0 (worst) to 10 (best)</Text>
 

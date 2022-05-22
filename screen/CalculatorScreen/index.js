@@ -28,22 +28,20 @@ const CalculatorScreen = () => {
   const [displayTipAmount, setDisplayTipAmount] = useState(0.00)
   const [displayTotal, setDisplayTotal] = useState(0.00)
   useEffect(() => {
-    console.log(cost);
-    console.log(tipPercentage);
     setDisplayTipAmount(cost * tipPercentage / 100)
     setDisplayTotal(parseFloat(cost) + parseFloat(displayTipAmount))
   })
 
 return ( 
-          <ScrollView style={{...styles.container,  flexGrow: 1}} scrollEnabled={true}>
-            <View style={{borderRadius: 15, borderWidth: 1, borderColor: 'white', display: 'flex', padding: 20}}>
-            <Amount updateAll={setCost}/>
-            <TipPercentage setTipPercentage={setTipPercentage} tipPercentage={tipPercentage}/>
-            <DisplayText displayAmount={displayTipAmount} text={"Tip Total:"}/>
-            <DisplayText displayAmount={displayTotal} text={"Total:"}/>
+          <SafeAreaView style={{...styles.container,  flexGrow: 1}} scrollEnabled={true}>
+            <View style={{borderRadius: 15, borderWidth: 1, borderColor: 'white', display: 'flex', padding: 20, height: 320, justifyContent: 'space-between'}}>
+              <Amount updateAll={setCost} initValue={cost}/>
+              <TipPercentage setTipPercentage={setTipPercentage} tipPercentage={tipPercentage}/>
+              <DisplayText displayAmount={displayTipAmount} text={"Tip Total:"}/>
+              <DisplayText displayAmount={displayTotal} text={"Total:"}/>
             </View>
             <SplitScreen totalAmount={cost} tipPercentage={tipPercentage / 100}/>
-          </ScrollView>
+          </SafeAreaView>
         )
 
 }

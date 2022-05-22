@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
     textInGeneral: {
         color: 'white',
         lineHeight: 40,
-        fontSize:25
+        fontSize:28
         //fontSize: RFPercentage(2)
     },
     smallText: {

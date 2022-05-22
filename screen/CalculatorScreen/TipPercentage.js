@@ -5,7 +5,7 @@ import {styles} from './styles'
 const tipPercentage = (props) => {
     return (
                 <View style={{ display: 'flex', flexDirection: "row" , paddingTop:20}}>
-                    <Text style={styles.textInGeneral}>Tip % : </Text>
+                    <Text style={styles.textInGeneral}>Tip%: </Text>
                     <Slider
                         style={{ flex: 2 }}
                         minimumValue={0}

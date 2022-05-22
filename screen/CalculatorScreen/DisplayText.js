@@ -5,7 +5,7 @@ import {styles} from './styles'
 const DisplayText = (props) => {
 
     return (
-        <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingTop: 20}}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingTop: 20,}}>
                  <Text style={styles.textInGeneral}>
                    {props.text}
                  </Text>

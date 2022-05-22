@@ -29,7 +29,7 @@ const SplitScreen = (props) => {
              <Button title="Spilting among friends?" onPress={setShouldShow} />
              {showSplit ? (
 
-                  <View style={{borderRadius: 15, borderWidth: 1, borderColor: 'white', display: 'flex', padding: 20}}>
+                  <View style={{borderRadius: 15, borderWidth: 1, borderColor: 'white', display: 'flex', padding: 20, height: 250, justifyContent: 'space-between'}}>
                    <View style={{flexDirection: 'row'}}>
                      <Text style={styles.textInGeneral}>Split:        </Text>
                      <InputSpinner
